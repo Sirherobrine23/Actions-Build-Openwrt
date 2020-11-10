@@ -35,7 +35,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-# More optioons
+# More options
 
 ```yml
   URL:
@@ -51,7 +51,7 @@ jobs:
   MOREPACKAGE:
     description: 'Apt package to add to use in build'
     required: false
-    default: ''
+    default:
 
   FEEDS_FILE:
     description: 'Openwrt Feed Repository File'

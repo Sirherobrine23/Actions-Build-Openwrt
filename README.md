@@ -15,8 +15,6 @@ jobs:
     - uses: Sirherobrine23/Actions-Build-Openwrt@main
       with:
         CONFIG: '.config'
-        P1: 'p1.sh'
-        p2: 'p2.sh'
     - name: Upload To Releases
       uses: softprops/action-gh-release@v1
       if: env.UPLOADTORELEASE == 'true'

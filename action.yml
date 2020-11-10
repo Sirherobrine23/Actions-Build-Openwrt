@@ -41,13 +41,18 @@ runs:
   steps:
     - name: Packages Install
       run: |
+        echo "Criando o Diretorio Para o Trabalho no /home/copiler"
+        sudo mkdir -p /home/copiler
+        echo "Definindo acesso para $USER"
+        sudo chown $USER:$USER /home/copiler
+        sudo chmod 777 /home/copiler/
         echo "Atualizando Os Repositorios APT"
-        sudo apt-get -qq update &> Apt-Log.txt
-        sudo apt install -y curl &> Apt-Log.txt
-        sudo apt purge -y *golang* *node* *android* *google* *mysql* *java* *openjdk* &> Apt-Log.txt
+        sudo apt-get -qq update &> /home/copiler/Apt-Log.txt
+        sudo apt install -y curl &> /home/copiler/Apt-Log.txt
+        sudo apt purge -y *golang* *node* *android* *google* *mysql* *java* *openjdk* &> /home/copiler/Apt-Log.txt
         echo "Instalando Os Pacotes Adicionais: ${{ inputs.MOREPACKAGE }}"
-        sudo apt -y install dos2unix git zip rsync mkisofs ${{ inputs.MOREPACKAGE }} $(curl -fsSL https://raw.githubusercontent.com/P3TERX/openwrt-list/master/depends-ubuntu-2004) &> Apt-Log.txt
-        sudo apt-get -qq autoremove --purge &> Apt-Log.txt
+        sudo apt -y install dos2unix git zip rsync mkisofs ${{ inputs.MOREPACKAGE }} $(curl -fsSL https://raw.githubusercontent.com/P3TERX/openwrt-list/master/depends-ubuntu-2004) &> /home/copiler/Apt-Log.txt
+        sudo apt-get -qq autoremove --purge &> /home/copiler/Apt-Log.txt
         # Remove Swap
         echo "Removendo os Swaps"
         sudo swapoff -a

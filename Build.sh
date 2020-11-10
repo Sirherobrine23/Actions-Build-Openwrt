@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 # importando e exportando as configurações
 export DIR2="$(pwd)"
-sudo mkdir /home/copiler/
-sudo chmod 777 /home/copiler/
-sudo chown $USER:$USER /home/copiler
 export uploadssh23="$DIR2/publics/"
 echo "Seu diretorio dos arquivos para copilação é: $DIR2"
 echo "Diretorio para Uploads: $uploadssh23"
@@ -31,21 +28,23 @@ clone(){
     git clone --depth 1 $URL -b $BRANCH /home/copiler/openwrt
     ln -s /mnt /home/copiler/openwrt/bin && LINKS=1
     if [ $LINKS == '1' ] ;then
-        echo $?
-        echo "14Gb free to bin files" 
+        echo "14Gb free to bin folde" 
     else
-        echo $?
-        echo 'Erro in to mount --bind'
+        echo 'Erro in to create Link'
         exit 23
     fi
     df -hT . && df -tT /mnt
     status1=1
 }
 p1(){
-    [ -e $FEEDS_FILE ] && mv $FEEDS_FILE openwrt/feeds.conf.default
-    chmod +x /home/copiler/$P1
-    cd /home/copiler/openwrt
-    /home/copiler/$P1
+    if [ -e $FEEDS_FILE ];then
+        mv $FEEDS_FILE openwrt/feeds.conf.default
+    fi
+    if [ -e /home/copiler/$P1 ];then
+        chmod +x /home/copiler/$P1
+        cd /home/copiler/openwrt
+        /home/copiler/$P1
+    fi
     cd /home/copiler/
     status2=1
 }
@@ -62,11 +61,17 @@ update_install(){
     status4=1
 }
 p2(){
-    [ -e files ] && mv files openwrt/files
-    [ -e $CONFIG ] && mv $CONFIG openwrt/.config
-    chmod +x /home/copiler/$P2
-    cd /home/copiler/openwrt
-    /home/copiler/$P2
+    # [ -e files ] && mv files openwrt/files
+    if [ -e $CONFIG ];then
+        mv $CONFIG openwrt/.config
+    else
+        exit 24
+    fi
+    if [ -e /home/copiler/$P2 ];then
+        chmod +x /home/copiler/$P2
+        cd /home/copiler/openwrt
+        /home/copiler/$P2
+    fi
     cd /home/copiler/
     status5=1
 }
@@ -86,7 +91,7 @@ make_copiler(){
         if [ $build1 == '1' ];then
             make -j1 || build2='1'
             if [ $build2 == '1' ];then
-                make -j1 V=s
+                make -j1 V=s || echo "Erro In Copiler Configs, exit in code 255";exit 255
             fi
         fi
     cd /home/copiler/
@@ -127,6 +132,10 @@ if [ $status1 == '1' ];then
                                 echo "TAG_NAME=$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
                                 echo "RELEASE_NAME=$(cat DEVICE_NAME)_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
                                 echo "UPLOADTORELEASE=true" >> $GITHUB_ENV
+                                cd ~/
+                                echo "Build Date: $(date +"%Y%m%d%H%M")" > release.txt
+                                echo "Build To Device: $(grep '^CONFIG_TARGET.*DEVICE.*=y' /home/copiler/openwrt/.config | sed -r 's/.*DEVICE_(.*)=y/\1/')" >> release.txt
+                                echo "Build To Device: $BRANCH" >> release.txt
                                 exit 0
                             else
                                 exit 134

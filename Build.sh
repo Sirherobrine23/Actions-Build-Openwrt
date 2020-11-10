@@ -26,7 +26,7 @@ cd /home/copiler/
 clone(){
     git clone --depth 1 $URL -b $BRANCH /home/copiler/openwrt && \
     mkdir /home/copiler/openwrt/bin && \
-    mount --bind /mnt /home/copiler/openwrt/bin || echo 'Erro in to mount --bind';exit 127
+    sudo mount --bind /mnt /home/copiler/openwrt/bin || echo 'Erro in to mount --bind';exit 23
     df -hT . && df -tT /mnt
     status1=1
 }

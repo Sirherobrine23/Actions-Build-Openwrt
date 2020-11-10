@@ -35,11 +35,14 @@ runs:
   using: "composite"
   steps:
     - run: |
+        echo "Atualizando Os Repositorios APT"
         sudo apt-get -qq update &> Apt-Log.txt
         sudo apt install -y curl &> Apt-Log.txt
+        echo "Instalando os Pacotes: dos2unix git zip rsync mkisofs $(curl -fsSL https://raw.githubusercontent.com/P3TERX/openwrt-list/master/depends-ubuntu-2004)"
         sudo apt -y install dos2unix git zip rsync mkisofs $(curl -fsSL https://raw.githubusercontent.com/P3TERX/openwrt-list/master/depends-ubuntu-2004) &> Apt-Log.txt
         sudo apt-get -qq autoremove --purge &> Apt-Log.txt
         # Remove Swap
+        echo "Removendo os Swaps"
         sudo swapoff -a
         sudo rm -rfv /mnt/swap*
         sudo chown $USER:$USER /mnt
@@ -47,8 +50,18 @@ runs:
       shell: bash
       env:
         DEBIAN_FRONTEND: 'noninteractive'
-    - run: bash $GITHUB_ACTION_PATH/Build.sh
+    - run: |
+        bash $GITHUB_ACTION_PATH/Build.sh
+      env:
+        URL: ${{ inputs.URL }}
+        BRANCH: ${{ inputs.BRANCH }}
+        FEEDS_FILE: ${{ inputs.FEEDS_FILE }}
+        CONFIG: ${{ inputs.CONFIG }}
+        P1: ${{ inputs.P1 }}
+        P2: ${{ inputs.P2 }}
       shell: bash
 branding:
   icon: 'code'
   color: 'gray-dark'
+
+# ${{ inputs.P1 }}

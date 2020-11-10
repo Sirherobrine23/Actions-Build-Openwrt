@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # importando e exportando as configurações
 export DIR2="$(pwd)"
 sudo mkdir /home/copiler/

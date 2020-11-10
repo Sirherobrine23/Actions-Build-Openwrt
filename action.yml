@@ -34,11 +34,11 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: $GITHUB_ACTION_PATH/Install.sh
+    - run: chmod=+x $GITHUB_ACTION_PATH/Install.sh && $GITHUB_ACTION_PATH/Install.sh
       shell: bash
       env:
         DEBIAN_FRONTEND: 'noninteractive'
-    - run: $GITHUB_ACTION_PATH/Build.sh
+    - run: chmod=+x $GITHUB_ACTION_PATH/Build.sh && $GITHUB_ACTION_PATH/Build.sh
       shell: bash
 branding:
   icon: 'code'

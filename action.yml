@@ -34,22 +34,23 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Package Installer
-      env:
-        DEBIAN_FRONTEND: 'noninteractive'
-      shell: bash
-      run: |
+      
+    - run: |
         apt-get -qq update &> Apt-Log.txt
         sudo apt install -y curl &> Apt-Log.txt
         sudo apt -y install dos2unix git zip rsync mkisofs $(curl -fsSL https://raw.githubusercontent.com/P3TERX/openwrt-list/master/depends-ubuntu-2004) &> Apt-Log.txt
         sudo apt-get -qq autoremove --purge &> Apt-Log.txt
-    - name: Remove swap
+      env:
+        DEBIAN_FRONTEND: 'noninteractive'
       shell: bash
-      run: |
+
+    - run: |
         sudo swapoff -a && \
         sudo rm -rfv /mnt/swap* && \
         sudo chown $USER:$USER /mnt && \
         sudo chmod 777 /mnt
+      shell: bash
+
     - run: $GITHUB_ACTION_PATH/Build.sh
       shell: bash
 branding:

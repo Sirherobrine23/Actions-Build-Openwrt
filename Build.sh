@@ -23,10 +23,15 @@ rm -rf .git*
 cp -rf . /home/copiler/
 # chamando o copilador
 cd /home/copiler/
+if [ $UID == '0' ] ;then
+    echo 'root !WARNING!'
+    SUDO='sudo'
+    export FORCE_UNSAFE_CONFIGURE=1
+fi
 clone(){
     git clone --depth 1 $URL -b $BRANCH /home/copiler/openwrt && \
     mkdir /home/copiler/openwrt/bin && \
-    sudo mount --bind /mnt /home/copiler/openwrt/bin || echo 'Erro in to mount --bind';exit 23
+    $SUDO mount --bind /mnt /home/copiler/openwrt/bin || echo 'Erro in to mount --bind';exit 23
     df -hT . && df -tT /mnt
     status1=1
 }
@@ -89,8 +94,6 @@ final(){
     status8=1
 }
 # status1-8=1
-echo 'root !WARNING!'
-export FORCE_UNSAFE_CONFIGURE=1
 clone 
 if [ $status1 == '1' ];then
     p1

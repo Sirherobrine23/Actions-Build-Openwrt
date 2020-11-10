@@ -12,7 +12,8 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@main
-    - uses: Sirherobrine23/Actions-Build-Openwrt@main
+    - name: Copiler
+      uses: Sirherobrine23/Actions-Build-Openwrt@main
       with:
         CONFIG: '.config'
     - name: Upload To Releases

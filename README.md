@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     name: Build
     steps:
+    - name: Checkout
+      uses: actions/checkout@main
     - uses: Sirherobrine23/Actions-Build-Openwrt@main
       with:
         CONFIG: '.config'

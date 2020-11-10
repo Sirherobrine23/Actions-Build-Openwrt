@@ -21,6 +21,11 @@ inputs:
     description: 'Openwrt Feed Repository File'
     required: false
     default: 'feeds.conf.default'
+  
+  UPLOADTORELEASE:
+    description: 'Publish Files in Release'
+    required: false
+    default: 'true'
 
   CONFIG:
     description: 'Openwrt Build File'
@@ -56,6 +61,7 @@ runs:
       shell: bash
       env:
         DEBIAN_FRONTEND: 'noninteractive'
+
     - run: |
         bash $GITHUB_ACTION_PATH/Build.sh
       env:
@@ -66,6 +72,23 @@ runs:
         P1: ${{ inputs.P1 }}
         P2: ${{ inputs.P2 }}
       shell: bash
+
+    - uses: softprops/action-gh-release@v1
+      if: inputs.UPLOADTORELEASE == 'true'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ env.RELEASE_TAG }}
+        body_path: release.txt
+        files: ${{ env.FIRMWARE_PATH }}/*
+
+    - uses: dev-drprasad/delete-older-releases@v0.1.0
+      if: inputs.UPLOADTORELEASE == 'true'
+      with:
+        keep_latest: 4
+        delete_tags: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 branding:
   icon: 'code'
   color: 'gray-dark'

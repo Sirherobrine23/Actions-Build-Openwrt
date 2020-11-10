@@ -8,16 +8,21 @@ export uploadssh23="$DIR2/publics/"
 echo "Seu diretorio dos arquivos para copilação é: $DIR2"
 echo "Diretorio para Uploads: $uploadssh23"
 echo "Diretorio Principal: $DIR2"
+echo '-----------------------------------------------------'
 echo "As variaveis pré-definidas pelo Usuario"
+echo '*****************************************************'
 echo "URL do repositorio de copilação: $URL"
 echo "BRANCH do repositorio: $BRANCH"
 echo "Configurações do feed: $FEEDS_FILE"
 echo "Arquivo da copilação: $CONFIG"
 echo "Arquivo de custumização P1: $P1"
 echo "Arquivo de custumização P2: $P2"
-echo '-----------------------------------------------------'
-# echo 'Rele'
-echo '-----------------------------------------------------'
+echo '*****************************************************'
+echo '* Relese Github path ENV:  ${{ env.FIRMWARE_PATH }} *'
+echo '* Device Name Github ENV:  ${{ env.DEVICE_NAME }}   *'
+echo '* Tag Name Github ENV:     ${{ env.TAG_NAME }}      *'
+echo '* Release Name Github ENV: ${{ env.RELEASE_NAME }}  *'
+echo '*****************************************************'
 mkdir publics/
 rm -rf .git*
 cp -rf . /home/copiler/
@@ -110,6 +115,12 @@ if [ $status1 == '1' ];then
                         if [ $status7 == '1' ];then
                             final
                             if [ $status8 == '1' ];then
+                                echo "FIRMWARE_PATH=$PWD" >> $GITHUB_ENV
+                                cd /home/copiler/
+                                grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
+                                echo "DEVICE_NAME=$(cat DEVICE_NAME)" >> $GITHUB_ENV
+                                echo "TAG_NAME=$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
+                                echo "RELEASE_NAME=$(cat DEVICE_NAME)_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
                                 exit 0
                             else
                                 exit 134

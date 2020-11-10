@@ -31,12 +31,15 @@ cd /home/copiler/
 if [ $UID == '0' ] ;then
     echo 'root !WARNING!'
     export FORCE_UNSAFE_CONFIGURE=1
-else
-    SUDO='sudo'
 fi
 clone(){
-    git clone --depth 1 $URL -b $BRANCH /home/copiler/openwrt && mkdir /home/copiler/openwrt/bin && \
-    echo "14Gb free to bin files";$SUDO mount --bind /mnt /home/copiler/openwrt/bin || echo 'Erro in to mount --bind';exit 23
+    git clone --depth 1 $URL -b $BRANCH /home/copiler/openwrt && \
+    if ! ln -s /mnt /home/copiler/openwrt/bin ;then
+        echo "14Gb free to bin files" 
+    else
+        echo 'Erro in to mount --bind'
+        exit 23
+    fi
     df -hT . && df -tT /mnt
     status1=1
 }

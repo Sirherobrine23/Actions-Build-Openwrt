@@ -17,7 +17,7 @@ jobs:
         p2: 'p2.sh'
     - name: Upload To Releases
       uses: softprops/action-gh-release@v1
-      if: inputs.UPLOADTORELEASE == 'true'
+      if: env.UPLOADTORELEASE == 'true'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
@@ -26,7 +26,7 @@ jobs:
         files: ${{ env.FIRMWARE_PATH }}/*
     - name: Delete Old Releases
       uses: dev-drprasad/delete-older-releases@v0.1.0
-      if: inputs.UPLOADTORELEASE == 'true'
+      if: env.UPLOADTORELEASE == 'true'
       with:
         keep_latest: 4
         delete_tags: true

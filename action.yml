@@ -21,11 +21,6 @@ inputs:
     description: 'Openwrt Feed Repository File'
     required: false
     default: 'feeds.conf.default'
-  
-  UPLOADTORELEASE:
-    description: 'Publish Files in Release'
-    required: false
-    default: 'true'
 
   CONFIG:
     description: 'Openwrt Build File'

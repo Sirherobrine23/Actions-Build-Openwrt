@@ -121,6 +121,7 @@ if [ $status1 == '1' ];then
                                 echo "DEVICE_NAME=$(cat DEVICE_NAME)" >> $GITHUB_ENV
                                 echo "TAG_NAME=$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
                                 echo "RELEASE_NAME=$(cat DEVICE_NAME)_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
+                                echo "UPLOADTORELEASE=true" >> $GITHUB_ENV
                                 exit 0
                             else
                                 exit 134

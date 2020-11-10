@@ -38,6 +38,7 @@ inputs:
     default: 'p2.sh'
 runs:
   using: "composite"
+  name: Install And Copiler
   steps:
     - name: Packages Install
       run: |

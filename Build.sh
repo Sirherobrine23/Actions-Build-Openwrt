@@ -27,14 +27,10 @@ mkdir publics/
 rm -rf .git*
 cp -rf . /home/copiler/
 # chamando o copilador
-cd /home/copiler/
-if [ $UID == '0' ] ;then
-    echo 'root !WARNING!'
-    export FORCE_UNSAFE_CONFIGURE=1
-fi
 clone(){
-    git clone --depth 1 $URL -b $BRANCH /home/copiler/openwrt && \
-    if ! ln -s /mnt /home/copiler/openwrt/bin ;then
+    git clone --depth 1 $URL -b $BRANCH /home/copiler/openwrt
+    ln -s /mnt /home/copiler/openwrt/bin && LINKS=1
+    if [ $LINKS == '1' ] ;then
         echo $?
         echo "14Gb free to bin files" 
     else
@@ -103,7 +99,11 @@ final(){
     ln -s /home/copiler/openwrt $DIR2/openwrt
     status8=1
 }
-# status1-8=1
+cd /home/copiler/
+if [ $UID == '0' ] ;then
+    echo 'root !WARNING!'
+    export FORCE_UNSAFE_CONFIGURE=1
+fi
 clone 
 if [ $status1 == '1' ];then
     p1

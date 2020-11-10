@@ -15,7 +15,23 @@ jobs:
         CONFIG: '.config'
         P1: 'p1.sh'
         p2: 'p2.sh'
-      
+    - name: Upload To Releases
+      uses: softprops/action-gh-release@v1
+      if: inputs.UPLOADTORELEASE == 'true'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ env.RELEASE_TAG }}
+        body_path: release.txt
+        files: ${{ env.FIRMWARE_PATH }}/*
+    - name: Delete Old Releases
+      uses: dev-drprasad/delete-older-releases@v0.1.0
+      if: inputs.UPLOADTORELEASE == 'true'
+      with:
+        keep_latest: 4
+        delete_tags: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 # More optioons

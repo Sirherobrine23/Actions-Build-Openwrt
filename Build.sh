@@ -35,8 +35,10 @@ fi
 clone(){
     git clone --depth 1 $URL -b $BRANCH /home/copiler/openwrt && \
     if ! ln -s /mnt /home/copiler/openwrt/bin ;then
+        echo $?
         echo "14Gb free to bin files" 
     else
+        echo $?
         echo 'Erro in to mount --bind'
         exit 23
     fi

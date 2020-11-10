@@ -15,7 +15,7 @@ inputs:
   MOREPACKAGE:
     description: 'Apt package to add to use in build'
     required: false
-    default: ''
+    default:
 
   FEEDS_FILE:
     description: 'Openwrt Feed Repository File'
@@ -39,7 +39,8 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: |
+    - name: Packages Install
+      run: |
         echo "Atualizando Os Repositorios APT"
         sudo apt-get -qq update &> Apt-Log.txt
         sudo apt install -y curl &> Apt-Log.txt

@@ -33,7 +33,8 @@ clone(){
         echo 'Erro in to create Link'
         exit 23
     fi
-    df -hT . && df -tT /mnt
+    df -hT . 
+    df -hT /mnt
     status1=1
 }
 p1(){
@@ -65,6 +66,7 @@ p2(){
     if [ -e $CONFIG ];then
         mv $CONFIG openwrt/.config
     else
+        echo "No Config file found"
         exit 24
     fi
     if [ -e /home/copiler/$P2 ];then

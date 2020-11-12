@@ -129,7 +129,7 @@ if [ $status1 == '1' ];then
                             if [ $status8 == '1' ];then
                                 echo "FIRMWARE_PATH=$PWD" >> $GITHUB_ENV
                                 cd /home/copiler/
-                                grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > /tmp/DEVICE_NAME
+                                cat /home/copiler/openwrt/.config | grep 'CONFIG_TARGET_PROFILE=' | sed 's|CONFIG_TARGET_PROFILE=||g' |sed 's|"||g' > /tmp/DEVICE_NAME
                                 echo "DEVICE_NAME=$(cat /tmp/DEVICE_NAME)" >> $GITHUB_ENV
                                 echo "TAG_NAME=$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
                                 echo "RELEASE_NAME=$(cat /tmp/DEVICE_NAME)_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV

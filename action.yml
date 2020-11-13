@@ -40,6 +40,7 @@ runs:
   using: "composite"
   steps:
     - name: Set Time
+      shell: bash
       run: |
         cd $GITHUB_ACTION_PATH/ && npm install && node time.js
     - name: Packages Install

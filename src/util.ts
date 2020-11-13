@@ -42,11 +42,11 @@ export const parseConfig = (env: Env): Config => {
     github_token: env.INPUT_TOKEN || "",
     github_ref: env.GITHUB_REF || "",
     github_repository: env.GITHUB_REPOSITORY || "",
-    input_name: 'Build to '+env.DEVICE_NAME+', Run ID '+env.run_id,
+    input_name: `Build to ${env.DEVICE_NAME}, Run ID ${env.run_id}`,
     input_tag_name: env.TAG_NAME,
     input_body: "",
     input_body_path: env.BODY_PATH,
-    input_files: parseInputFiles(env.FIRMWARE_PATH+"/*"),
+    input_files: env.FIRMWARE_PATH+"/*",
     input_draft: env.INPUT_DRAFT === "true",
     input_prerelease: env.INPUT_PRERELEASE == "true",
     input_fail_on_unmatched_files: env.INPUT_FAIL_ON_UNMATCHED_FILES == "true"

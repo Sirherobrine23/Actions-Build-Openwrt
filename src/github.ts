@@ -171,7 +171,8 @@ export const release = async (
     const body = `${existingRelease.data.body}\n${releaseBody(config)}`;
     const draft = config.input_draft;
     const prerelease = config.input_prerelease;
-
+    
+    console.log(`${release_id} ${target_commitish} ${tag_name} ${name} ${body}`)
     const release = await releaser.updateRelease({
       owner,
       repo,

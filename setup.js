@@ -7,7 +7,7 @@ function installAPT(){
     // --------------------------------------------
 
     const packages = core.getInput('MOREPACKAGE')
-    var aptrepo = exec('bash ' + __dirname + "/src/Install.sh "+ `"${packages}"`, {
+    var aptrepo = exec('bash ' + __dirname + "/src/Install.sh", {
         detached: false,
         shell: true
     });
@@ -22,7 +22,7 @@ function installAPT(){
         }
     });
 }
-var npmi = exec('cd ' + __dirname + " && pwd && npm install ", {detached: false,shell: true});
+var npmi = exec(`cd ${__dirname} && pwd && npm install`, {detached: false,shell: true});
 // npmi.stdout.on('data', function (data) {
 //     console.log(data)
 // });

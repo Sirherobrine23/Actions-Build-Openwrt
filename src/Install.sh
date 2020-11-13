@@ -18,7 +18,7 @@ echo "::group::Apt"
     sudo apt install -y curl &> /home/copiler/Apt-Log.txt
     sudo apt -y install dos2unix git zip rsync mkisofs  $(curl -fsSL https://raw.githubusercontent.com/P3TERX/openwrt-list/master/depends-ubuntu-2004) &> /home/copiler/Apt-Log.txt
     echo "Pacotes Instalados: dos2unix git zip rsync mkisofs  $(curl -fsSL https://raw.githubusercontent.com/P3TERX/openwrt-list/master/depends-ubuntu-2004), e depedencias"
-    if [ -z $INPUT_MOREPACKAGE == '' ];then
+    if [ $INPUT_MOREPACKAGE == '' ];then
         echo "No more Packages"
     else
         echo "Instalando Os Pacotes Adicionais: $INPUT_MOREPACKAGE"
@@ -33,7 +33,7 @@ echo "::group::SwapFile"
     echo "Removendo os Swaps"
     sudo swapoff -a
     sudo rm -rfv /mnt/swap*
-    echo "Definindo Algumas Permissões para o diretorio \"bin\""
-    sudo chown $USER:$GROUPS /mnt
-    sudo chmod 777 /mnt
 echo "::endgroup::"
+echo "Definindo Algumas Permissões para o diretorio \"bin\""
+sudo chown $USER:$GROUPS /mnt
+sudo chmod 777 /mnt

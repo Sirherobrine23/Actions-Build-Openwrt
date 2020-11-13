@@ -25,16 +25,18 @@ rm -rf .git*
 cp -rf . /home/copiler/
 # chamando o copilador
 clone(){
-    git clone --depth 1 $INPUT_URL -b $INPUT_BRANCH /home/copiler/openwrt
-    ln -s /mnt /home/copiler/openwrt/bin && LINKS=1
-    if [ $LINKS == '1' ] ;then
-        echo "14Gb free to bin folde" 
-    else
-        echo 'Erro in to create Link'
-        exit 23
-    fi
-    df -hT . 
-    df -hT /mnt
+    echo "::group::Git Clone"
+        git clone --depth 1 $INPUT_URL -b $INPUT_BRANCH /home/copiler/openwrt
+        ln -s /mnt /home/copiler/openwrt/bin && LINKS=1
+        if [ $LINKS == '1' ] ;then
+            echo "14Gb free to bin folde" 
+        else
+            echo 'Erro in to create Link'
+            exit 23
+        fi
+        df -hT . 
+        df -hT /mnt
+    echo "::endgroup::"
     status1=1
 }
 p1(){
@@ -78,12 +80,14 @@ p2(){
     status5=1
 }
 make_download(){
-    cd /home/copiler/openwrt
-    make defconfig
-    make download -j8
-    find dl -size -1024c -exec ls -l {} \;
-    find dl -size -1024c -exec rm -f {} \;
-    cd /home/copiler/
+    echo "::group::Make DefConfig and make Download"
+        cd /home/copiler/openwrt
+        make defconfig
+        make download -j8
+        find dl -size -1024c -exec ls -l {} \;
+        find dl -size -1024c -exec rm -f {} \;
+        cd /home/copiler/
+    echo "::endgroup::"
     status6=1
 }
 make_copiler(){

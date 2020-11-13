@@ -39,7 +39,7 @@ export const parseInputFiles = (files: string): string[] => {
 
 export const parseConfig = (env: Env): Config => {
   return {
-    github_token: env.TOKEN || "",
+    github_token: env.INPUT_TOKEN || "",
     github_ref: env.GITHUB_REF || "",
     github_repository: env.GITHUB_REPOSITORY || "",
     input_name: 'Build to '+env.DEVICE_NAME+', Run ID '+env.run_id,

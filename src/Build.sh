@@ -8,12 +8,12 @@ echo "Diretorio Principal: $DIR2"
 echo '-----------------------------------------------------'
 echo "As variaveis pré-definidas pelo Usuario"
 echo '*****************************************************'
-echo "URL do repositorio de copilação: $URL"
-echo "BRANCH do repositorio: $BRANCH"
-echo "Configurações do feed: $FEEDS_FILE"
-echo "Arquivo da copilação: $CONFIG"
-echo "Arquivo de custumização P1: $P1"
-echo "Arquivo de custumização P2: $P2"
+echo "URL do repositorio de copilação: $1"
+echo "BRANCH do repositorio: $2"
+echo "Configurações do feed: $3"
+echo "Arquivo da copilação: $4"
+echo "Arquivo de custumização P1: $5"
+echo "Arquivo de custumização P2: $6"
 echo '*****************************************************'
 echo '* Relese Github path ENV:  ${{ env.FIRMWARE_PATH }} *'
 echo '* Device Name Github ENV:  ${{ env.DEVICE_NAME }}   *'
@@ -25,7 +25,7 @@ rm -rf .git*
 cp -rf . /home/copiler/
 # chamando o copilador
 clone(){
-    git clone --depth 1 $URL -b $BRANCH /home/copiler/openwrt
+    git clone --depth 1 $1 -b $2 /home/copiler/openwrt
     ln -s /mnt /home/copiler/openwrt/bin && LINKS=1
     if [ $LINKS == '1' ] ;then
         echo "14Gb free to bin folde" 
@@ -38,13 +38,13 @@ clone(){
     status1=1
 }
 p1(){
-    if [ -e $FEEDS_FILE ];then
-        mv $FEEDS_FILE openwrt/feeds.conf.default
+    if [ -e $3 ];then
+        mv $3 openwrt/feeds.conf.default
     fi
-    if [ -e /home/copiler/$P1 ];then
-        chmod +x /home/copiler/$P1
+    if [ -e /home/copiler/$5 ];then
+        chmod +x /home/copiler/$5
         cd /home/copiler/openwrt
-        /home/copiler/$P1
+        /home/copiler/$5
     fi
     cd /home/copiler/
     status2=1
@@ -63,16 +63,16 @@ update_install(){
 }
 p2(){
     # [ -e files ] && mv files openwrt/files
-    if [ -e $CONFIG ];then
-        mv $CONFIG openwrt/.config
+    if [ -e $4 ];then
+        mv $4 openwrt/.config
     else
         echo "No Config file found"
         exit 24
     fi
-    if [ -e /home/copiler/$P2 ];then
-        chmod +x /home/copiler/$P2
+    if [ -e /home/copiler/$6 ];then
+        chmod +x /home/copiler/$6
         cd /home/copiler/openwrt
-        /home/copiler/$P2
+        /home/copiler/$6
     fi
     cd /home/copiler/
     status5=1
@@ -137,7 +137,7 @@ if [ $status1 == '1' ];then
                                 cd $DIR2
                                 echo "Build Date: $(date +"%H:%M %Y/%m/%d")" > release.txt
                                 echo "Build To Device: $(cat /tmp/DEVICE_NAME)" >> release.txt
-                                echo "Build To Device: $BRANCH" >> release.txt
+                                echo "Build To Device: $2" >> release.txt
                                 exit 0
                             else
                                 exit 134

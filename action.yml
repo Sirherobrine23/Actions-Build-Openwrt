@@ -1,4 +1,4 @@
-name: "Build Openwrt Image in Github CI"
+name: "Build Openwrt Image in Github CI With Javascript"
 author: "Sirherobrine23"
 description: "Create Snapshot images in Github Actions"
 inputs:
@@ -11,6 +11,11 @@ inputs:
     description: 'Git Repository Branch'
     required: false
     default: 'master'
+
+  TOKEN:
+    description: 'Git Repository Branch'
+    required: false
+    default: ${{ secret.GITHUB_TOKEN }}
 
   MOREPACKAGE:
     description: 'Apt package to add to use in build'
@@ -36,51 +41,26 @@ inputs:
     description: 'File Bash Script for execute before feed Update'
     required: false
     default: 'p2.sh'
+  # 
+  # 
+  #
+  # body_path:
+  #   description: 'Path to load note-worthy description of changes in release from'
+  #   required: false
+  # name:
+  #   description: 'Gives the release a custom name. Defaults to tag name'
+  #   required: false
+  # tag_name:
+  #   description: 'Gives a tag name. Defaults to github.GITHUB_REF'
+  #   required: false
+  # files:
+  #   description: 'Newline-delimited list of path globs for asset files to upload'
+  #   required: false
 runs:
-  using: "composite"
-  steps:
-    - name: Set Time
-      shell: bash
-      run: |
-        cd $GITHUB_ACTION_PATH/ 
-        npm install
-        pwd
-        node time.js
-    - name: Packages Install
-      run: |
-        echo "Criando o Diretorio Para o Trabalho no /home/copiler"
-        sudo mkdir -p /home/copiler
-        echo "Definindo acesso para $USER"
-        sudo chown $USER:$GROUPS /home/copiler
-        sudo chmod 777 /home/copiler/
-        echo "Atualizando Os Repositorios APT"
-        sudo apt-get -qq update &> /home/copiler/Apt-Log.txt
-        sudo apt install -y curl &> /home/copiler/Apt-Log.txt
-        sudo apt purge -y *golang* *node* *android* *google* *mysql* *java* *openjdk* &> /home/copiler/Apt-Log.txt
-        echo "Instalando Os Pacotes Adicionais: ${{ inputs.MOREPACKAGE }}"
-        sudo apt -y install dos2unix git zip rsync mkisofs ${{ inputs.MOREPACKAGE }} $(curl -fsSL https://raw.githubusercontent.com/P3TERX/openwrt-list/master/depends-ubuntu-2004) &> /home/copiler/Apt-Log.txt
-        sudo apt-get -qq autoremove --purge &> /home/copiler/Apt-Log.txt
-        # Remove Swap
-        echo "Removendo os Swaps"
-        sudo swapoff -a
-        sudo rm -rfv /mnt/swap*
-        sudo chown $USER:$GROUPS /mnt
-        sudo chmod 777 /mnt
-      shell: bash
-      env:
-        DEBIAN_FRONTEND: 'noninteractive'
-
-    - run: |
-        bash $GITHUB_ACTION_PATH/Build.sh
-      env:
-        URL: ${{ inputs.URL }}
-        BRANCH: ${{ inputs.BRANCH }}
-        FEEDS_FILE: ${{ inputs.FEEDS_FILE }}
-        CONFIG: ${{ inputs.CONFIG }}
-        P1: ${{ inputs.P1 }}
-        P2: ${{ inputs.P2 }}
-      shell: bash
-
+  using: 'node12'
+  pre: 'setup.js'
+  main: 'copiler.js'
+  post: 'dist/index.js'
 
 branding:
   icon: 'code'

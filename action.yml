@@ -12,11 +12,6 @@ inputs:
     required: false
     default: 'master'
 
-  BRANCH:
-    description: 'Git Repository Branch'
-    required: false
-    default: 'master'
-
   MOREPACKAGE:
     description: 'Apt package to add to use in build'
     required: false

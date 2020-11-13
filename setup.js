@@ -23,12 +23,12 @@ function installAPT(){
     });
 }
 var npmi = exec('cd ' + __dirname + " && pwd && npm install ", {detached: false,shell: true});
-npmi.stdout.on('data', function (data) {
-    console.log(data)
-});
+// npmi.stdout.on('data', function (data) {
+//     console.log(data)
+// });
 npmi.on('exit', function (code) {
     if (code == 0) {
-        console.log('NPM Sucess')
+        // console.log('NPM install Sucess')
         installAPT();
     } else {
         console.log('exit with code: '+code);

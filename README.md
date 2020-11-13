@@ -10,22 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     name: Build
     steps:
-    - name: Checkout
-      uses: actions/checkout@main
-    - name: Copiler
-      uses: Sirherobrine23/Actions-Build-Openwrt@main
-      with:
-        CONFIG: '.config'
-    - name: Upload To Releases
-      uses: softprops/action-gh-release@v1
-      if: env.UPLOADTORELEASE == 'true'
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        name: Build to ${{ env.DEVICE_NAME }}, Run ID ${{ github.run_id }}
-        tag_name: ${{ github.run_id }}
-        body_path: release.txt
-        files: ${{ env.FIRMWARE_PATH }}/*
     - name: Delete Old Releases
       uses: dev-drprasad/delete-older-releases@v0.1.0
       if: env.UPLOADTORELEASE == 'true'
@@ -34,6 +18,13 @@ jobs:
         delete_tags: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Checkout
+      uses: actions/checkout@main
+    - name: Copiler
+      uses: Sirherobrine23/Actions-Build-Openwrt@javascript
+      with:
+        CONFIG: '.config'
+        TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 # More options

@@ -95,9 +95,18 @@ make_copiler(){
     echo -e "$(nproc) thread compile"
     make -j$(nproc) || build1='1'
         if [ $build1 == '1' ];then
+        echo "::group::error, rerun, attempt 1"
             make -j1 || build2='1'
+        echo "::endgroup::"
             if [ $build2 == '1' ];then
-                make -j1 V=s || echo "Erro In Copiler Configs, exit in code 255";exit 255
+            echo "::group::error, rerun, attempt 2"
+                make -j1 V=s || build3=1
+                echo "::endgroup::"
+                if [ $build3 == '1' ];then
+                    echo "Erro In Copiler Configs"
+                    exit 255
+                fi
+            echo "::endgroup::"
             fi
         fi
     cd /home/copiler/

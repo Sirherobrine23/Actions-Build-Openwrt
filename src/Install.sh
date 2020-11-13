@@ -7,11 +7,12 @@ sudo chmod 777 /home/copiler/
 echo "Atualizando Os Repositorios APT"
 sudo apt-get -qq update &> /home/copiler/Apt-Log.txt
 sudo apt install -y curl &> /home/copiler/Apt-Log.txt
-sudo apt purge -y *golang* *node* *android* *google* *mysql* *java* *openjdk* &> /home/copiler/Apt-Log.txt
+echo "Removendos alguns pacotes"
+sudo apt purge -y *golang* *android* *google* *mysql* *java* *openjdk* &> /home/copiler/Apt-Log.txt
 echo "Instalando Os Pacotes Essenciais"
 sudo apt -y install dos2unix git zip rsync mkisofs  $(curl -fsSL https://raw.githubusercontent.com/P3TERX/openwrt-list/master/depends-ubuntu-2004) &> /home/copiler/Apt-Log.txt
-echo "Instalando Os Pacotes Adicionais: $1"
-sudo apt -y install $1 &> /home/copiler/Apt-Log.txt
+echo "Instalando Os Pacotes Adicionais: $INPUT_MOREPACKAGE"
+sudo apt -y install $INPUT_MOREPACKAGE &> /home/copiler/Apt-Log.txt
 sudo apt-get -qq autoremove --purge &> /home/copiler/Apt-Log.txt
 # Remove Swap
 echo "Removendo os Swaps"

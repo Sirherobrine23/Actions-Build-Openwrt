@@ -14,8 +14,7 @@ inputs:
 
   TOKEN:
     description: 'Git Repository Branch'
-    required: false
-    default: ${{ secret.GITHUB_TOKEN }}
+    required: true
 
   MOREPACKAGE:
     description: 'Apt package to add to use in build'

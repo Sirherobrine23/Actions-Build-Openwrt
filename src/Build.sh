@@ -80,7 +80,7 @@ p2(){
     status5=1
 }
 make_download(){
-    echo "::group::Make DefConfig and make Download"
+    echo "::group::Defconfig and Download"
         cd /home/copiler/openwrt
         make defconfig
         make download -j8
@@ -93,7 +93,9 @@ make_download(){
 make_copiler(){
     cd /home/copiler/openwrt
     echo -e "$(nproc) thread compile"
-    make -j$(nproc) || build1='1'
+    echo "::group::make build"
+        make -j$(nproc) || build1='1'
+    echo "::endgroup::"
         if [ $build1 == '1' ];then
         echo "::group::error, rerun, attempt 1"
             make -j1 || build2='1'

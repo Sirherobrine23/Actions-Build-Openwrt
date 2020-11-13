@@ -44,9 +44,9 @@ export const parseConfig = (env: Env): Config => {
     github_repository: env.GITHUB_REPOSITORY || "",
     input_name: 'Build to '+env.DEVICE_NAME+', Run ID '+env.run_id,
     input_tag_name: env.TAG_NAME,
-    // input_body: env.INPUT_BODY,
-    input_body_path: 'release.txt',
-    input_files: parseInputFiles(env.FIRMWARE_PATH+'/*' || ""),
+    input_body: "",
+    input_body_path: env.BODY_PATH,
+    input_files: parseInputFiles(env.FIRMWARE_PATH+"/*"),
     input_draft: env.INPUT_DRAFT === "true",
     input_prerelease: env.INPUT_PRERELEASE == "true",
     input_fail_on_unmatched_files: env.INPUT_FAIL_ON_UNMATCHED_FILES == "true"

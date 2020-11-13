@@ -3,7 +3,7 @@ import { release, upload, GitHubReleaser } from "./github";
 import { setFailed, setOutput } from "@actions/core";
 import { GitHub } from "@actions/github";
 import { env } from "process";
-
+console.log(`${env.INPUT_TOKEN}, ${env.GITHUB_REF}, ${env.GITHUB_REPOSITORY}, Build to ${env.DEVICE_NAME}, Run ID ${env.run_id}, ${env.TAG_NAME}, ${env.BODY_PATH}, ${env.FIRMWARE_PATH}/*,  ${env.INPUT_DRAFT}, ${env.INPUT_PRERELEASE}, ${env.INPUT_FAIL_ON_UNMATCHED_FILES}`)
 async function run() {
   try {
     const config = parseConfig(env);

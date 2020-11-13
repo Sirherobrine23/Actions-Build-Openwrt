@@ -153,6 +153,11 @@ if [ $status1 == '1' ];then
                                 echo "Build Date: $(date +"%H:%M %Y/%m/%d")" > release.txt
                                 echo "Build To Device: $(cat /tmp/DEVICE_NAME)" >> release.txt
                                 echo "Build To Device: $INPUT_BRANCH" >> release.txt
+                                echo "BODY_PATH=$PWD/release.txt" >> $GITHUB_ENV
+                                echo "::group::ENVs"
+                                     cat $GITHUB_ENV
+                                    echo $GITHUB_ENV
+                                echo "::endgroup::"
                                 exit 0
                             else
                                 exit 134

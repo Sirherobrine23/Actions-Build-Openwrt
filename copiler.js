@@ -6,7 +6,7 @@ core.setOutput("time", time);
 // TIME
 
 function publish(){
-    var ghre = exec(`node ${__dirname}/dist/index.js`, {detached: false,shell: true});
+    var ghre = exec(`cd ${__dirname} && node dist/index.js`, {detached: false,shell: true});
     ghre.stdout.on('data', function (data) {
         console.log(data)
     });

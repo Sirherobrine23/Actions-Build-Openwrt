@@ -1,5 +1,5 @@
 {
-    "name": "Actions Build Openwrt javascript",
+    "name": "Actions-Build-Openwrt-javascript",
     "version": "1.0.0",
     "description": "Openwrt Copiler",
     "main": "index.js",

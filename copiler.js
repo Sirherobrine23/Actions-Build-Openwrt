@@ -4,13 +4,21 @@ const core = require('@actions/core');
 const time = (new Date()).toTimeString();
 core.setOutput("time", time);
 // TIME
-const URL = core.getInput('URL')
-const BRANCH = core.getInput('BRANCH')
-const FEED = core.getInput('FEEDS_FILE')
-const CONFIG = core.getInput('CONFIG')
-const P1 = core.getInput('P1')
-const P2 = core.getInput('P2');
-// console.log(`Git Url: "${URL}", Branch: "${BRANCH}", Feed File: "${FEED}", Config File: "${CONFIG}", Pre Script: "${P1}", Post Script: "${P2}"`)
+
+function publish(){
+    var ghre = exec(`node ${__dirname}/dist/index.js`, {detached: false,shell: true});
+    ghre.stdout.on('data', function (data) {
+        console.log(data)
+    });
+    ghre.on('exit', function (code) {
+        if (code == 0) {
+            console.log('NPM install Sucess')
+        } else {
+            console.log('exit with code: '+code);
+        }
+    });
+}
+
 // Build 
 var serverstated = exec(`bash ${__dirname}/src/Build.sh`, {
     detached: false,
@@ -21,7 +29,7 @@ serverstated.stdout.on('data', function (data) {
 });
 serverstated.on('exit', function (code) {
     if (code == 0) {
-        console.log('Sucess')
+        publish();
     } else {
         if (code == 23 ){
             core.setFailed('Erro in Link bin folder: '+code);

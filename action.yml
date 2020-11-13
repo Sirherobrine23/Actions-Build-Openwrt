@@ -40,27 +40,12 @@ inputs:
   TOKEN:
     description: 'File Bash Script for execute before feed Update'
     required: true
-  # 
-  # 
-  #
-  # body_path:
-  #   description: 'Path to load note-worthy description of changes in release from'
-  #   required: false
-  # name:
-  #   description: 'Gives the release a custom name. Defaults to tag name'
-  #   required: false
-  # tag_name:
-  #   description: 'Gives a tag name. Defaults to github.GITHUB_REF'
-  #   required: false
-  # files:
-  #   description: 'Newline-delimited list of path globs for asset files to upload'
-  #   required: false
-  
+
 runs:
   using: 'node12'
   pre: 'setup.js'
   main: 'copiler.js'
-  post: 'dist/index.js'
+  # post: 'dist/index.js'
 
 branding:
   icon: 'code'

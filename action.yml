@@ -44,8 +44,8 @@ inputs:
 runs:
   using: 'node12'
   pre: 'setup.js'
-  # post: 'copiler.js'
-  main: 'dist/index.js'
+  main: 'copiler.js'
+  # post: 'dist/index.js'
 
 branding:
   icon: 'code'

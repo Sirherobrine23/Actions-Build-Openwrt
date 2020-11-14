@@ -16,8 +16,8 @@ echo "::group::Apt"
     sudo apt purge -y *golang* *android* *google* *mysql* *java* *openjdk* &> /home/copiler/Apt-Log.txt
     echo "Instalando Os Pacotes Essenciais, Isso pode demorar!"
     sudo apt install -y curl &> /home/copiler/Apt-Log.txt
-    sudo apt -y install dos2unix git zip rsync mkisofs  $(curl -fsSL https://raw.githubusercontent.com/P3TERX/openwrt-list/master/depends-ubuntu-2004) &> /home/copiler/Apt-Log.txt
-    echo "Pacotes Instalados: dos2unix git zip rsync mkisofs  $(curl -fsSL https://raw.githubusercontent.com/P3TERX/openwrt-list/master/depends-ubuntu-2004), e depedencias"
+    sudo apt -y install dos2unix git zip rsync mkisofs $(curl -fsSL https://raw.githubusercontent.com/P3TERX/openwrt-list/master/depends-ubuntu-2004) &> /home/copiler/Apt-Log.txt
+    echo "Pacotes Instalados: dos2unix git zip rsync mkisofs $(curl -fsSL https://raw.githubusercontent.com/P3TERX/openwrt-list/master/depends-ubuntu-2004), e depedencias"
     if [ $INPUT_MOREPACKAGE == '' ];then
         echo "No more Packages"
     else

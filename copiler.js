@@ -29,7 +29,7 @@ serverstated.stdout.on('data', function (data) {
 });
 serverstated.on('exit', function (code) {
     if (code == 0) {
-        publish();
+        // publish();
     } else {
         if (code == 23 ){
             core.setFailed('Erro in Link bin folder: '+code);

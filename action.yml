@@ -36,19 +36,12 @@ inputs:
     description: 'File Bash Script for execute before feed Update'
     required: false
     default: 'p2.sh'
-  
-  TOKEN:
-    description: 'File Bash Script for execute before feed Update'
-    required: true
 
 runs:
   using: 'node12'
   pre: 'setup.js'
   main: 'copiler.js'
-  post: 'dist/index.js'
 
 branding:
   icon: 'code'
   color: 'gray-dark'
-
-# ${{ inputs.P1 }}

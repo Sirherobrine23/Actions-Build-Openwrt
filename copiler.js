@@ -4,21 +4,6 @@ const core = require('@actions/core');
 const time = (new Date()).toTimeString();
 core.setOutput("time", time);
 // TIME
-
-function publish(){
-    var ghre = exec(`cd ${__dirname} && node dist/index.js`, {detached: false,shell: true});
-    ghre.stdout.on('data', function (data) {
-        console.log(data)
-    });
-    ghre.on('exit', function (code) {
-        if (code == 0) {
-            console.log('NPM install Sucess')
-        } else {
-            console.log('exit with code: '+code);
-        }
-    });
-}
-
 // Build 
 var serverstated = exec(`bash ${__dirname}/src/Build.sh`, {
     detached: false,
@@ -29,7 +14,7 @@ serverstated.stdout.on('data', function (data) {
 });
 serverstated.on('exit', function (code) {
     if (code == 0) {
-        // publish();
+        console.log('Sucess')
     } else {
         if (code == 23 ){
             core.setFailed('Erro in Link bin folder: '+code);

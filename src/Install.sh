@@ -1,8 +1,4 @@
 #!/bin/bash
-echo "::group::ENVs"
-     cat $GITHUB_ENV
-    echo $GITHUB_ENV
-echo "::endgroup::"
 # Basic
 echo "::group::Dir"
     echo "Criando o Diretorio Para o Trabalho no /home/copiler"

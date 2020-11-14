@@ -1,18 +1,13 @@
 var exec = require('child_process').exec;
-
 function installAPT(){
     const core = require('@actions/core');
     const time = (new Date()).toTimeString();
     core.setOutput("time", time);
-    // --------------------------------------------
-
+    // Time End
     const packages = core.getInput('MOREPACKAGE')
-    var aptrepo = exec('bash ' + __dirname + "/src/Install.sh", {
-        detached: false,
-        shell: true
-    });
+    var aptrepo = exec(`bash ${__dirname}/src/Install.sh`);
     aptrepo.stdout.on('data', function (data) {
-        console.log(data)
+        console.log(data);
     });
     aptrepo.on('exit', function (code) {
         if (code == 0) {

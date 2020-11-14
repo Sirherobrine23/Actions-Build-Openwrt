@@ -10,7 +10,7 @@ export interface Config {
   input_tag_name?: string;
   input_body?: string;
   input_body_path?: string;
-  input_files?: string[];
+  input_files?: string;
   input_draft?: boolean;
   input_prerelease?: boolean;
   input_fail_on_unmatched_files?: boolean;

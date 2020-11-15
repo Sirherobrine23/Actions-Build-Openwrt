@@ -95,14 +95,20 @@ make_copiler(){
     echo -e "$(nproc) thread compile"
     echo "::group::make build"
         make -j$(nproc) || build1='1'
+        df -hT . 
+        df -hT /mnt
     echo "::endgroup::"
         if [ $build1 == '1' ];then
         echo "::group::error, rerun, attempt 1"
             make -j1 || build2='1'
+            df -hT . 
+            df -hT /mnt
         echo "::endgroup::"
             if [ $build2 == '1' ];then
             echo "::group::error, rerun, attempt 2"
                 make -j1 V=s || build3=1
+                df -hT . 
+                df -hT /mnt
                 echo "::endgroup::"
                 if [ $build3 == '1' ];then
                     echo "Erro In Copiler Configs"

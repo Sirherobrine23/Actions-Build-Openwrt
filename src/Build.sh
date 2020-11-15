@@ -27,7 +27,8 @@ cp -rf . /home/copiler/
 clone(){
     echo "::group::Git Clone"
         git clone --depth 1 $INPUT_URL -b $INPUT_BRANCH /home/copiler/openwrt
-        ln -s /mnt /home/copiler/openwrt/bin && LINKS=1
+        mkdir /home/copiler/openwrt/bin 
+        sudo mount --bind /mnt /home/copiler/openwrt/bin && LINKS=1
         if [ $LINKS == '1' ] ;then
             echo "14Gb free to bin folde" 
         else

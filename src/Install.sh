@@ -27,6 +27,14 @@ echo "::group::Apt"
     sudo apt-get -qq autoremove --purge &> /home/copiler/Apt-Log.txt
 echo "::endgroup::"
 
+echo "::group::removing large directories"
+    echo "Remove Dotnet (20Gb free)"
+    apt purge --remove *dotnet* -y
+    sudo rm -rfv /usr/share/dotnet
+    echo 'Remove android sdk (11Gb+ Free)'
+    sudo rm -rfv /usr/local/lib/android
+echo "::endgroup::"
+
 # Swap
 echo "::group::SwapFile"
     # Remove Swap

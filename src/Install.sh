@@ -30,9 +30,11 @@ echo "::endgroup::"
 echo "::group::removing large directories"
     echo "Remove Dotnet (20Gb free)"
     apt purge --remove *dotnet* -y
-    sudo rm -rfv /usr/share/dotnet
+    sudo rm -rf /usr/share/dotnet
+    echo "Sucess"
     echo 'Remove android sdk (11Gb+ Free)'
-    sudo rm -rfv /usr/local/lib/android
+    sudo rm -rf /usr/local/lib/android
+    echo "Sucess"
 echo "::endgroup::"
 
 # Swap
@@ -40,8 +42,11 @@ echo "::group::SwapFile"
     # Remove Swap
     echo "Removendo os Swaps"
     sudo swapoff -a
-    sudo rm -rfv /mnt/swap*
+    sudo rm -rf /mnt/swap*
+    echo "Sucess"
 echo "::endgroup::"
 echo "Definindo Algumas Permissões para o diretorio \"bin\""
 sudo chown $USER:$GROUPS /mnt
 sudo chmod 777 /mnt
+echo "Sucess"
+exit 0

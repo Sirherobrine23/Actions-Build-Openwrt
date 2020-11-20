@@ -157,9 +157,9 @@ if [ $status1 == '1' ];then
                                 echo "RELEASE_NAME=$(cat /tmp/DEVICE_NAME)_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
                                 echo "UPLOADTORELEASE=true" >> $GITHUB_ENV
                                 cd $DIR2
-                                echo "Build Date: $(date +"%H:%M %Y/%m/%d")" > release.txt
+                                echo "Build Date: $(date +"%H:%M %d/%m/%Y")" > release.txt
                                 echo "Build To Device: $(cat /tmp/DEVICE_NAME)" >> release.txt
-                                echo "Build To Device: $INPUT_BRANCH" >> release.txt
+                                echo "Build Branch: $INPUT_BRANCH" >> release.txt
                                 echo "BODY_PATH=$PWD/release.txt" >> $GITHUB_ENV
                                 echo "::group::ENVs"
                                      cat $GITHUB_ENV

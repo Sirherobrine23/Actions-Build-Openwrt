@@ -1,27 +1,27 @@
 #!/bin/bash
 # Basic
 echo "::group::Dir"
-    echo "Criando o Diretorio Para o Trabalho no /home/copiler"
+    echo "Creating the Directory for Work in /home/copiler"
     sudo mkdir -p /home/copiler
-    echo "Definindo acesso para $USER"
+    echo "Setting access to $USER"
     sudo chown $USER:$GROUPS /home/copiler
     sudo chmod 777 /home/copiler/
 echo "::endgroup::"
 
 # APT
 echo "::group::Apt"
-    echo "Atualizando Os Repositorios APT"
+    echo "Updating APT Repositories"
     sudo apt-get -qq update &> /home/copiler/Apt-Log.txt
-    echo "Removendos alguns pacotes"
+    echo "Removing some packages"
     sudo apt purge -y *golang* *android* *google* *mysql* *java* *openjdk* &> /home/copiler/Apt-Log.txt
-    echo "Instalando Os Pacotes Essenciais, Isso pode demorar!"
+    echo "Installing Essential Packages, This can take time! (Between 2 to 5 Min)"
     sudo apt install -y curl &> /home/copiler/Apt-Log.txt
     sudo apt -y install dos2unix git zip rsync mkisofs $(curl -fsSL https://raw.githubusercontent.com/P3TERX/openwrt-list/master/depends-ubuntu-2004) &> /home/copiler/Apt-Log.txt
-    echo "Pacotes Instalados: dos2unix git zip rsync mkisofs $(curl -fsSL https://raw.githubusercontent.com/P3TERX/openwrt-list/master/depends-ubuntu-2004), e depedencias"
+    echo "Installed Packages: dos2unix git zip rsync mkisofs $(curl -fsSL https://raw.githubusercontent.com/P3TERX/openwrt-list/master/depends-ubuntu-2004), and dependencies"
     if [ $INPUT_MOREPACKAGE == '' ];then
         echo "No more Packages"
     else
-        echo "Instalando Os Pacotes Adicionais: $INPUT_MOREPACKAGE"
+        echo "Installing Additional Packages: $INPUT_MOREPACKAGE"
         sudo apt -y install $INPUT_MOREPACKAGE &> /home/copiler/Apt-Log.txt
     fi
     sudo apt-get -qq autoremove --purge &> /home/copiler/Apt-Log.txt
@@ -40,12 +40,12 @@ echo "::endgroup::"
 # Swap
 echo "::group::SwapFile"
     # Remove Swap
-    echo "Removendo os Swaps"
+    echo "Removing Swaps"
     sudo swapoff -a
     sudo rm -rf /mnt/swap*
     echo "Sucess"
 echo "::endgroup::"
-echo "Definindo Algumas Permissões para o diretorio \"bin\""
+echo "Defining Some Permissions for the Directory \"bin\""
 sudo chown $USER:$GROUPS /mnt
 sudo chmod 777 /mnt
 echo "Sucess"

@@ -1,19 +1,19 @@
 #!/usr/bin/env bash
-# importando e exportando as configurações
+# importing and exporting settings
 export DIR2="$(pwd)"
 export uploadssh23="$DIR2/publics/"
-echo "Seu diretorio dos arquivos para copilação é: $DIR2"
-echo "Diretorio para Uploads: $uploadssh23"
-echo "Diretorio Principal: $DIR2"
+echo "Your directory of files for copying is: $DIR2"
+echo "Directory for Uploads: $uploadssh23"
+echo "Main Directory: $DIR2"
 echo '-----------------------------------------------------'
-echo "As variaveis pré-definidas pelo Usuario"
+echo "The variables predefined by the User"
 echo '*****************************************************'
-echo "URL do repositorio de copilação: $INPUT_URL"
-echo "BRANCH do repositorio: $INPUT_BRANCH"
-echo "Configurações do feed: $INPUT_FEEDS_FILE"
-echo "Arquivo da copilação: $INPUT_CONFIG"
-echo "Arquivo de custumização P1: $INPUT_P1"
-echo "Arquivo de custumização P2: $INPUT_P2"
+echo "Compilation repository URL: $INPUT_URL"
+echo "BRANCH of the repository: $INPUT_BRANCH"
+echo "Feed settings: $INPUT_FEEDS_FILE"
+echo "Copilation file: $INPUT_CONFIG"
+echo "Customization file P1: $INPUT_P1"
+echo "Customization file P2: $INPUT_P2"
 echo '*****************************************************'
 echo '* Relese Github path ENV:  ${{ env.FIRMWARE_PATH }} *'
 echo '* Device Name Github ENV:  ${{ env.DEVICE_NAME }}   *'
@@ -23,7 +23,7 @@ echo '*****************************************************'
 mkdir publics/
 rm -rf .git*
 cp -rf . /home/copiler/
-# chamando o copilador
+# calling the copilator
 clone(){
     echo "::group::Git Clone"
         git clone --depth 1 $INPUT_URL -b $INPUT_BRANCH /home/copiler/openwrt
@@ -98,24 +98,31 @@ make_copiler(){
         make -j$(nproc) || build1='1'
         df -hT . 
         df -hT /mnt
-    echo "::endgroup::"
+    echo "::endgroup::" # Build 1
         if [ $build1 == '1' ];then
-        echo "::group::error, rerun, attempt 1"
+        echo "::group::error, rerun, attempt 2"
             make -j1 || build2='1'
             df -hT . 
             df -hT /mnt
-        echo "::endgroup::"
+        echo "::endgroup::" # Build 2
             if [ $build2 == '1' ];then
-            echo "::group::error, rerun, attempt 2"
+            echo "::group::error, rerun, attempt 3"
                 make -j1 V=s || build3=1
                 df -hT . 
                 df -hT /mnt
-                echo "::endgroup::"
+                echo "::endgroup::" # Build 3
                 if [ $build3 == '1' ];then
-                    echo "Erro In Copiler Configs"
-                    exit 255
+                    echo "::group::error, rerun, attempt 4"
+                    make V=99 || build4=1
+                    df -hT . 
+                    df -hT /mnt
+                    echo "::endgroup::" # Build 4
+                    if [ $build4 == '1' ];then
+                        echo "Erro In Copiler Configs"
+                        exit 255
+                    fi
                 fi
-            echo "::endgroup::"
+            # echo "::endgroup::"
             fi
         fi
     cd /home/copiler/

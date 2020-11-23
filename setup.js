@@ -5,7 +5,7 @@ function installAPT(){
     core.setOutput("time", time);
     // Time End
     const packages = core.getInput('MOREPACKAGE')
-    var aptrepo = exec(`bash ${__dirname}/src/Install.sh`);
+    var aptrepo = exec(`sudo cp -rfv ${__dirname}/src/source_ubuntu.list /etc/apt/sources.list && bash ${__dirname}/src/Install.sh`);
     aptrepo.stdout.on('data', function (data) {
         console.log(data);
     });

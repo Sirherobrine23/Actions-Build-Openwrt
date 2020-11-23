@@ -11,27 +11,28 @@ echo "::endgroup::"
 # APT
 echo "::group::Apt"
     echo "Updating APT Repositories"
-    sudo apt-get -qq update &> /home/copiler/Apt-Log.txt
+    sudo apt-get update &>> /home/copiler/Apt-Log.txt
     echo "Removing some packages"
-    sudo apt purge -y *golang* *android* *google* *mysql* *java* *openjdk* &> /home/copiler/Apt-Log.txt
+    sudo apt purge -y *golang* *android* *google* *mysql* *java* *openjdk* &>> /home/copiler/Apt-Log.txt
     echo "Installing Essential Packages, This can take time! (Between 2 to 5 Min)"
-    sudo apt install -y curl &> /home/copiler/Apt-Log.txt
-    sudo apt -y install dos2unix git zip rsync mkisofs *libpcre* *jansson* *pcre* $(curl -fsSL https://raw.githubusercontent.com/P3TERX/openwrt-list/master/depends-ubuntu-2004) &> /home/copiler/Apt-Log.txt
-    echo "Installed Packages: dos2unix git zip rsync mkisofs $(curl -fsSL https://raw.githubusercontent.com/P3TERX/openwrt-list/master/depends-ubuntu-2004), and dependencies"
-    if [ $INPUT_MOREPACKAGE == '' ];then
+    sudo apt install -y curl &>> /home/copiler/Apt-Log.txt
+    sudo apt -y install dos2unix git zip rsync mkisofs *libpcre* *jansson* *pcre* $(curl -fsSL https://raw.githubusercontent.com/P3TERX/openwrt-list/master/depends-ubuntu-2004) &>> /home/copiler/Apt-Log.txt
+    # echo "Installed Packages: dos2unix git zip rsync mkisofs $(curl -fsSL https://raw.githubusercontent.com/P3TERX/openwrt-list/master/depends-ubuntu-2004), and dependencies"
+    if [ -z $INPUT_MOREPACKAGE ];then
         echo "No more Packages"
     else
         echo "Installing Additional Packages: $INPUT_MOREPACKAGE"
-        sudo apt -y install $INPUT_MOREPACKAGE &> /home/copiler/Apt-Log.txt
+        sudo apt -y install $INPUT_MOREPACKAGE &>> /home/copiler/Apt-Log.txt
     fi
-    sudo apt-get -qq autoremove --purge &> /home/copiler/Apt-Log.txt
+    sudo apt-get -qq autoremove --purge &>> /home/copiler/Apt-Log.txt
 echo "::endgroup::"
 
 echo "::group::removing large directories"
     echo "Remove Dotnet (20Gb free)"
-    apt purge --remove *dotnet* -y
+    apt purge --remove *dotnet* -y &>> /home/copiler/Apt-Log.txt
     sudo rm -rf /usr/share/dotnet
     echo "Sucess"
+    echo -e "\n---------------------------------\n"
     echo 'Remove android sdk (11Gb+ Free)'
     sudo rm -rf /usr/local/lib/android
     echo "Sucess"

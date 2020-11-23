@@ -16,7 +16,7 @@ echo "::group::Apt"
     sudo apt purge -y *golang* *android* *google* *mysql* *java* *openjdk* &> /home/copiler/Apt-Log.txt
     echo "Installing Essential Packages, This can take time! (Between 2 to 5 Min)"
     sudo apt install -y curl &> /home/copiler/Apt-Log.txt
-    sudo apt -y install dos2unix git zip rsync mkisofs $(curl -fsSL https://raw.githubusercontent.com/P3TERX/openwrt-list/master/depends-ubuntu-2004) &> /home/copiler/Apt-Log.txt
+    sudo apt -y install dos2unix git zip rsync mkisofs *libpcre* *jansson* *pcre* $(curl -fsSL https://raw.githubusercontent.com/P3TERX/openwrt-list/master/depends-ubuntu-2004) &> /home/copiler/Apt-Log.txt
     echo "Installed Packages: dos2unix git zip rsync mkisofs $(curl -fsSL https://raw.githubusercontent.com/P3TERX/openwrt-list/master/depends-ubuntu-2004), and dependencies"
     if [ $INPUT_MOREPACKAGE == '' ];then
         echo "No more Packages"

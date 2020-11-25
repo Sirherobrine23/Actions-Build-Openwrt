@@ -98,7 +98,7 @@ echo "Removing some packages"
 sudo apt purge -y *golang* *android* *google* *mysql* *java* *openjdk* &>> /home/copiler/Apt-Log.txt
 echo "Installing Essential Packages, This can take time! (Between 2 to 5 Min)"
 sudo apt install -y curl &>> /home/copiler/Apt-Log.txt
-sudo apt -y install dos2unix git zip rsync mkisofs *libpcre* *jansson* *pcre* $(curl -fsSL https://raw.githubusercontent.com/P3TERX/openwrt-list/master/depends-ubuntu-2004) &>> /home/copiler/Apt-Log.txt
+sudo apt -y install dos2unix git zip rsync mkisofs python python2.7 perl imagemagick subversion git gcc g++ binutils autoconf automake libtool-bin make bzip2 libncurses5-dev libreadline-dev zlib1g-dev flex bison patch texinfo tofrodos gettext pkg-config realpath libstring-crc32-perl gawk libusb-dev unzip intltool libacl1-dev libcap-dev libc6-dev libglib2.0-dev unzip wget curl zip libssl-dev *libpcre* *jansson* *pcre* $(curl -fsSL https://raw.githubusercontent.com/P3TERX/openwrt-list/master/depends-ubuntu-2004) &>> /home/copiler/Apt-Log.txt
 sudo apt -y install $INPUT_MOREPACKAGE &>> /home/copiler/Apt-Log.txt
 
 echo "Remove Dotnet (20Gb free)"

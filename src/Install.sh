@@ -98,7 +98,7 @@ echo "Removing some packages"
 sudo apt purge -y *golang* *android* *google* *mysql* *java* *openjdk* &>> /home/copiler/Apt-Log.txt
 echo "Installing Essential Packages, This can take time! (Between 2 to 5 Min)"
 sudo apt install -y curl
-sudo apt install -y dos2unix git zip rsync mkisofs *jansson* *pcre* || exit 128
+sudo apt install -y dos2unix git zip rsync mkisofs *jansson* || exit 128
 if [ $VERSION_ID == '20.04' ];then
     sudo apt -y install $(curl -fsSL https://raw.githubusercontent.com/P3TERX/openwrt-list/master/depends-ubuntu-2004) || exit 127
 else

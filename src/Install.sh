@@ -104,8 +104,12 @@ if [ $VERSION_ID == '20.04' ];then
 else
     sudo apt -y install $(curl -fsSL https://raw.githubusercontent.com/P3TERX/openwrt-list/master/depends-ubuntu-1804) &>> /home/copiler/Apt-Log.txt
 fi
-sudo apt -y install $INPUT_MOREPACKAGE
-
+echo -e '\n-------- Additional Packages --------\n'
+for Other_install in $INPUT_MOREPACKAGE
+do 
+    sudo apt -y install $Other_install
+done
+echo -e '\n-----------------\n'
 echo "Remove Dotnet (20Gb free)"
 apt purge --remove *dotnet* -y
 sudo rm -rf /usr/share/dotnet

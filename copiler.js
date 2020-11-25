@@ -5,10 +5,7 @@ const time = (new Date()).toTimeString();
 core.setOutput("time", time);
 // TIME
 // Build 
-var serverstated = exec(`bash ${__dirname}/src/Build.sh`, {
-    detached: false,
-    shell: true
-});
+var serverstated = exec(`bash ${__dirname}/src/Build.sh`, {detached: false, shell: true, maxBuffer: Infinity});
 serverstated.stdout.on('data', function (data) {
     console.log(data.replace('\n', ''))
 });

@@ -18,7 +18,7 @@ function installAPT(){
         }
     });
 }
-var npmi = exec(`cd ${__dirname} && pwd && npm install`, {detached: false,shell: true});
+var npmi = exec(`cd ${__dirname} && pwd && npm install`, {detached: false,shell: true, maxBuffer: Infinity});
 console.log('Node Modules install')
 // npmi.stdout.on('data', function (data) {
 //     console.log(data)

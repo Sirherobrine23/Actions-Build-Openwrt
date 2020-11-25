@@ -25,19 +25,17 @@ rm -rf .git*
 cp -rf . /home/copiler/
 # calling the copilator
 clone(){
-    echo "::group::Git Clone"
-        git clone --depth 1 $INPUT_URL -b $INPUT_BRANCH /home/copiler/openwrt
-        mkdir /home/copiler/openwrt/bin 
-        sudo mount --bind /mnt /home/copiler/openwrt/bin && LINKS=1
-        if [ $LINKS == '1' ] ;then
-            echo "14Gb free to bin folde" 
-        else
-            echo 'Erro in to create Link'
-            exit 23
-        fi
+    git clone --depth 1 $INPUT_URL -b $INPUT_BRANCH /home/copiler/openwrt
+    mkdir /home/copiler/openwrt/bin 
+    sudo mount --bind /mnt /home/copiler/openwrt/bin && LINKS=1
+    if [ $LINKS == '1' ] ;then
+        echo "14Gb free to bin folde" 
         df -hT . 
         df -hT /mnt
-    echo "::endgroup::"
+    else
+        echo 'Erro in to create Link'
+        exit 23
+    fi
     status1=1
 }
 p1(){
@@ -45,9 +43,10 @@ p1(){
         mv $INPUT_FEEDS_FILE openwrt/feeds.conf.default
     fi
     if [ -e /home/copiler/$INPUT_P1 ];then
-        chmod +x /home/copiler/$INPUT_P1
         cd /home/copiler/openwrt
-        /home/copiler/$INPUT_P1
+        bash /home/copiler/$INPUT_P1
+    else
+        echo "There is no file: $INPUT_P1"
     fi
     cd /home/copiler/
     status2=1
@@ -67,15 +66,15 @@ update_install(){
 p2(){
     # [ -e files ] && mv files openwrt/files
     if [ -e $INPUT_CONFIG ];then
+        echo "Moving the openwrt build file"
         mv $INPUT_CONFIG openwrt/.config
     else
         echo "No Config file found"
         exit 24
     fi
     if [ -e /home/copiler/$INPUT_P2 ];then
-        chmod +x /home/copiler/$INPUT_P2
         cd /home/copiler/openwrt
-        /home/copiler/$INPUT_P2
+        bash /home/copiler/$INPUT_P2
     fi
     cd /home/copiler/
     status5=1

@@ -53,13 +53,13 @@ p1(){
 }
 update(){
     cd /home/copiler/openwrt 
-    ./scripts/feeds update -a &> /home/copiler/log_update.txt
+    ./scripts/feeds update -a
     cd /home/copiler/
     status3=1
 }
 update_install(){
     cd /home/copiler/openwrt
-    ./scripts/feeds install -a &> /home/copiler/log_install.txt
+    ./scripts/feeds install -a
     cd /home/copiler/
     status4=1
 }

@@ -7,7 +7,7 @@ core.setOutput("time", time);
 // Build 
 var serverstated = exec(`bash ${__dirname}/src/Build.sh`, {detached: false, shell: true, maxBuffer: Infinity});
 serverstated.stdout.on('data', function (data) {
-    console.log(data.replace('\n', ''))
+    console.log(data)
 });
 serverstated.on('exit', function (code) {
     if (code == 0) {

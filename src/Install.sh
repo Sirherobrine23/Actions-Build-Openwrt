@@ -98,7 +98,7 @@ echo "Removing some packages"
 sudo apt purge -y *golang* *android* *google* *mysql* *java* *openjdk* &>> /home/copiler/Apt-Log.txt
 echo "Installing Essential Packages, This can take time! (Between 2 to 5 Min)"
 sudo apt install -y curl
-sudo apt -y install dos2unix git zip rsync mkisofs *libpcre* *jansson* *pcre* $(curl -fsSL https://raw.githubusercontent.com/P3TERX/openwrt-list/master/depends-ubuntu-2004) || exit 127
+sudo apt -y install dos2unix git zip rsync mkisofs *jansson* *pcre* $(curl -fsSL https://raw.githubusercontent.com/P3TERX/openwrt-list/master/depends-ubuntu-2004) || exit 127
 sudo apt -y install $INPUT_MOREPACKAGE
 
 echo "Remove Dotnet (20Gb free)"

@@ -128,7 +128,7 @@ make_copiler(){
     status7=1
 }
 final(){
-    cd /home/copiler/openwrt/bin/targets/*/*
+    cd /home/copiler/openwrt/bin/targets/*/* || exit 255
     rm -rfv packages
     cp -rfv * $uploadssh23
     ln -s /home/copiler/openwrt $DIR2/openwrt
@@ -155,7 +155,6 @@ if [ $status1 == '1' ];then
                         if [ $status7 == '1' ];then
                             final
                             if [ $status8 == '1' ];then
-                                cp -rfv /home/copiler/Apt-Log.txt ./AptLog_install.txt
                                 echo "FIRMWARE_PATH=$PWD" >> $GITHUB_ENV
                                 cd /home/copiler/
                                 cat /home/copiler/openwrt/.config | grep 'CONFIG_TARGET_PROFILE=' | sed 's|CONFIG_TARGET_PROFILE=||g' |sed 's|"||g' > /tmp/DEVICE_NAME

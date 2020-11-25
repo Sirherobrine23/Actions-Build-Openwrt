@@ -93,16 +93,16 @@ cat /tmp/apt_sources.txt | sudo tee /etc/apt/sources.list &> /dev/null
 
 # APT
 echo "Updating APT Repositories"
-sudo apt-get update &>> /home/copiler/Apt-Log.txt
+sudo apt-get update
 echo "Removing some packages"
-sudo apt purge -y *golang* *android* *google* *mysql* *java* *openjdk* &>> /home/copiler/Apt-Log.txt
+sudo apt purge -y *golang* *android* *google* *mysql* *java* *openjdk*
 echo "Installing Essential Packages, This can take time! (Between 2 to 5 Min)"
-sudo apt install -y curl &>> /home/copiler/Apt-Log.txt
-sudo apt -y install dos2unix git zip rsync mkisofs python python2.7 perl imagemagick subversion git gcc g++ binutils autoconf automake libtool-bin make bzip2 libncurses5-dev libreadline-dev zlib1g-dev flex bison patch texinfo tofrodos gettext pkg-config realpath libstring-crc32-perl gawk libusb-dev unzip intltool libacl1-dev libcap-dev libc6-dev libglib2.0-dev unzip wget curl zip libssl-dev *libpcre* *jansson* *pcre* $(curl -fsSL https://raw.githubusercontent.com/P3TERX/openwrt-list/master/depends-ubuntu-2004) &>> /home/copiler/Apt-Log.txt
-sudo apt -y install $INPUT_MOREPACKAGE &>> /home/copiler/Apt-Log.txt
+sudo apt install -y curl
+sudo apt -y install dos2unix git zip rsync mkisofs python python2.7 perl imagemagick subversion git gcc g++ binutils autoconf automake libtool-bin make bzip2 libncurses5-dev libreadline-dev zlib1g-dev flex bison patch texinfo tofrodos gettext pkg-config realpath libstring-crc32-perl gawk libusb-dev unzip intltool libacl1-dev libcap-dev libc6-dev libglib2.0-dev unzip wget curl zip libssl-dev *libpcre* *jansson* *pcre* $(curl -fsSL https://raw.githubusercontent.com/P3TERX/openwrt-list/master/depends-ubuntu-2004)
+sudo apt -y install $INPUT_MOREPACKAGE
 
 echo "Remove Dotnet (20Gb free)"
-apt purge --remove *dotnet* -y &>> /home/copiler/Apt-Log.txt
+apt purge --remove *dotnet* -y
 sudo rm -rf /usr/share/dotnet
 echo "Sucess"
 echo -e "\n---------------------------------\n"
@@ -110,7 +110,7 @@ echo 'Remove android sdk (11Gb+ Free)'
 sudo rm -rf /usr/local/lib/android
 echo "Sucess"
 # Autoremove
-sudo apt-get -qq autoremove --purge &>> /home/copiler/Apt-Log.txt
+sudo apt-get -qq autoremove --purge
 
 # Swap
 # Remove Swap

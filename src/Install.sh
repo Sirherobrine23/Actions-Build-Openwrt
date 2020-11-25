@@ -89,7 +89,7 @@ else
 fi
 cat /etc/apt/sources.list >> /tmp/apt_sources.txt
 sleep 1s
-cat /tmp/apt_sources.txt | sudo tee /etc/apt/sources.list
+cat /tmp/apt_sources.txt | sudo tee /etc/apt/sources.list &> /dev/null
 
 # APT
 echo "Updating APT Repositories"

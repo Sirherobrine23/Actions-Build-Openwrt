@@ -10,7 +10,7 @@ var serverstated = exec(`bash ${__dirname}/src/Build.sh`, {
     shell: true
 });
 serverstated.stdout.on('data', function (data) {
-    console.log(data)
+    console.log(data.replace('\n', ''))
 });
 serverstated.on('exit', function (code) {
     if (code == 0) {

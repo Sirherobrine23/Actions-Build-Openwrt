@@ -7,11 +7,12 @@ function installAPT(){
     const packages = core.getInput('MOREPACKAGE')
     var aptrepo = exec(`bash ${__dirname}/src/Install.sh`);
     aptrepo.stdout.on('data', function (data) {
-        console.log(data);
+        console.log(data.replace('\n', '/\"'));
     });
     aptrepo.on('exit', function (code) {
         if (code == 0) {
-            console.log('Apt Packages Install Sucess')
+            // console.log('Apt Packages Install Sucess')
+            console.log('Alt sucess')
         } else {
             core.setFailed('exit with code: '+code);
         }
@@ -24,9 +25,9 @@ console.log('Node Modules install')
 // });
 npmi.on('exit', function (code) {
     if (code == 0) {
-        // console.log('NPM install Sucess')
+        console.log('NPM install Sucess')
         installAPT();
     } else {
-        console.log('exit with code: '+code);
+        console.log('npm left with an error, code: '+code);
     }
 });

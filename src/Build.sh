@@ -107,13 +107,13 @@ make_copiler(){
         echo "::endgroup::" # Build 2
             if [ $build2 == '1' ];then
             echo "::group::error, rerun, attempt 3"
-                make -j1 V=s || build3=1
+                make -j1 V=sc || build3=1
                 df -hT . 
                 df -hT /mnt
                 echo "::endgroup::" # Build 3
                 if [ $build3 == '1' ];then
                     echo "::group::error, rerun, attempt 4"
-                    make V=99 || build4=1
+                    make -j1 V=sw || build4=1
                     df -hT . 
                     df -hT /mnt
                     echo "::endgroup::" # Build 4

@@ -7,7 +7,7 @@ function installAPT(){
     const packages = core.getInput('MOREPACKAGE')
     var aptrepo = exec(`bash ${__dirname}/src/Install.sh`, { maxBuffer: Infinity});
     aptrepo.stdout.on('data', function (data) {
-        console.log(data.replace('\n', '/\"'));
+        console.log(data);
     });
     aptrepo.on('exit', function (code) {
         if (code == 0) {

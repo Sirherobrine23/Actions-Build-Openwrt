@@ -5,7 +5,7 @@ function installAPT(){
     core.setOutput("time", time);
     // Time End
     const packages = core.getInput('MOREPACKAGE')
-    var aptrepo = exec(`bash ${__dirname}/src/Install.sh`);
+    var aptrepo = exec(`bash ${__dirname}/src/Install.sh`, { maxBuffer: Infinity});
     aptrepo.stdout.on('data', function (data) {
         console.log(data.replace('\n', '/\"'));
     });
@@ -18,7 +18,7 @@ function installAPT(){
         }
     });
 }
-var npmi = exec(`cd ${__dirname} && pwd && npm install`, {detached: false,shell: true, maxBuffer: Infinity});
+var npmi = exec(`cd ${__dirname} && pwd && npm install`, {detached: false,shell: true});
 console.log('Node Modules install')
 // npmi.stdout.on('data', function (data) {
 //     console.log(data)

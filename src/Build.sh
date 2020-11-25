@@ -130,6 +130,7 @@ make_copiler(){
 final(){
     cd /home/copiler/openwrt/bin/targets/*/* || exit 255
     rm -rfv packages
+    cp -rfv /home/copiler/Apt-Log.txt ./Apt.txt
     cp -rfv * $uploadssh23
     ln -s /home/copiler/openwrt $DIR2/openwrt
     status8=1

@@ -93,16 +93,16 @@
 
 # APT
 echo "Updating APT Repositories"
-sudo apt-get update
+sudo apt-get update &>> /home/copiler/Apt-Log.txt
 echo "Removing some packages"
 sudo apt purge -y *golang* *android* *google* *mysql* *java* *openjdk* &>> /home/copiler/Apt-Log.txt
 echo "Installing Essential Packages, This can take time! (Between 2 to 5 Min)"
 sudo apt install -y curl
-sudo apt install -y dos2unix git zip rsync mkisofs *jansson* || exit 128
+sudo apt install -y dos2unix git zip rsync mkisofs *jansson* libtinfo5 &>> /home/copiler/Apt-Log.txt
 if [ $VERSION_ID == '20.04' ];then
-    sudo apt -y install $(curl -fsSL https://raw.githubusercontent.com/P3TERX/openwrt-list/master/depends-ubuntu-2004) || exit 127
+    sudo apt -y install $(curl -fsSL https://raw.githubusercontent.com/P3TERX/openwrt-list/master/depends-ubuntu-2004) &>> /home/copiler/Apt-Log.txt
 else
-    sudo apt -y install $(curl -fsSL https://raw.githubusercontent.com/P3TERX/openwrt-list/master/depends-ubuntu-1804) || exit 127
+    sudo apt -y install $(curl -fsSL https://raw.githubusercontent.com/P3TERX/openwrt-list/master/depends-ubuntu-1804) &>> /home/copiler/Apt-Log.txt
 fi
 sudo apt -y install $INPUT_MOREPACKAGE
 

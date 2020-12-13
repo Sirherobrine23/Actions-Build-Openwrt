@@ -67,7 +67,7 @@ p2(){
     # [ -e files ] && mv files openwrt/files
     if [ -e $INPUT_CONFIG ];then
         echo "Moving the openwrt build file"
-        mv $INPUT_CONFIG openwrt/.config
+        grep -v ^\# $INPUT_CONFIG | grep  . > openwrt/.config
     else
         echo "No Config file found"
         exit 24

@@ -29,7 +29,6 @@ clone(){
     mkdir /home/copiler/openwrt/bin 
     sudo mount --bind /mnt /home/copiler/openwrt/bin && LINKS=1
     if [ $LINKS == '1' ] ;then
-        echo "14Gb free to bin folde" 
         df -hT . 
         df -hT /mnt
     else
@@ -133,7 +132,40 @@ final(){
     cp -rfv /home/copiler/Apt-Log.txt ./Apt.txt
     cp -rf * $uploadssh23
     ln -s /home/copiler/openwrt $DIR2/openwrt
+    cd /home/copiler/
     status8=1
+}
+final2(){
+    cd /home/copiler/openwrt/bin/targets/*/* || exit 255
+    echo "FIRMWARE_PATH=$PWD" >> $GITHUB_ENV
+    cd /home/copiler/
+    cat /home/copiler/openwrt/.config | grep 'CONFIG_TARGET_PROFILE=' | sed 's|CONFIG_TARGET_PROFILE=||g' |sed 's|"||g' > /tmp/DEVICE_NAME
+    echo "DEVICE_NAME=$(cat /tmp/DEVICE_NAME)" >> $GITHUB_ENV
+    echo "TAG_NAME=$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
+    echo "RELEASE_NAME=$(cat /tmp/DEVICE_NAME)_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
+    echo "UPLOADTORELEASE=true" >> $GITHUB_ENV
+    cd $DIR2
+    echo "Build Date: $(date +"%H:%M %d/%m/%Y")" > release.txt
+    echo "Build To Device: $(cat /tmp/DEVICE_NAME)" >> release.txt
+    echo "Build Branch:  $INPUT_BRANCH" >> release.txt
+    echo "Github Branch: $GITHUB_REF" >> release.txt
+    if cat /home/copiler/openwrt/.config|grep -q "CONFIG_PACKAGE_luci";then
+        LUCI="true"
+    else 
+        LUCI="false"
+    fi 
+    if cat /home/copiler/openwrt/.config|grep -q "openvpn";then
+        VPN="OpenVPN"
+    else
+        if cat /home/copiler/openwrt/.config|grep -q "wireguard";then
+            VPN="Wireguard"
+        else
+            VPN="There is no or was not detected"
+        fi
+    fi
+    echo "Includes LUCI: $LUCI" >> release.txt
+    echo "Includes VPN: $VPN" >> release.txt
+    echo "BODY_PATH=$PWD/release.txt" >> $GITHUB_ENV
 }
 cd /home/copiler/
 if [ $UID == '0' ] ;then
@@ -156,21 +188,7 @@ if [ $status1 == '1' ];then
                         if [ $status7 == '1' ];then
                             final
                             if [ $status8 == '1' ];then
-                                echo "FIRMWARE_PATH=$PWD" >> $GITHUB_ENV
-                                cd /home/copiler/
-                                cat /home/copiler/openwrt/.config | grep 'CONFIG_TARGET_PROFILE=' | sed 's|CONFIG_TARGET_PROFILE=||g' |sed 's|"||g' > /tmp/DEVICE_NAME
-                                echo "DEVICE_NAME=$(cat /tmp/DEVICE_NAME)" >> $GITHUB_ENV
-                                echo "TAG_NAME=$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
-                                echo "RELEASE_NAME=$(cat /tmp/DEVICE_NAME)_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
-                                echo "UPLOADTORELEASE=true" >> $GITHUB_ENV
-                                cd $DIR2
-                                echo "Build Date: $(date +"%H:%M %d/%m/%Y")" > release.txt
-                                echo "Build To Device: $(cat /tmp/DEVICE_NAME)" >> release.txt
-                                echo "Build Branch: $INPUT_BRANCH" >> release.txt
-                                echo "BODY_PATH=$PWD/release.txt" >> $GITHUB_ENV
-                                echo "::group::ENVs"
-                                     cat $GITHUB_ENV
-                                echo "::endgroup::"
+                                final2
                                 exit 0
                             else
                                 exit 134

@@ -62,11 +62,33 @@ update_install(){
     cd /home/copiler/
     status4=1
 }
+ConfigINFO(){
+    if cat /home/copiler/openwrt/.config|grep -q "CONFIG_PACKAGE_luci";then
+        LUCI="true"
+        echo "With LUCI"
+    else 
+        LUCI="false"
+        echo "Without LUCI"
+    fi 
+    # Detection of VPN protocols
+    if cat /home/copiler/openwrt/.config|grep -q "openvpn"
+    then
+        VPN="OpenVPN"
+        echo "OpenVPN"
+    elif cat /home/copiler/openwrt/.config|grep -q "wireguard"
+    then
+        VPN="Wireguard"
+        echo "Wireguard"
+    else
+        VPN="There is no or was not detected"
+        echo "There is no or was not detected"
+    fi
+}
 p2(){
     # [ -e files ] && mv files openwrt/files
     if [ -e $INPUT_CONFIG ];then
         echo "Moving the openwrt build file"
-        grep -v ^\# $INPUT_CONFIG | grep  . > openwrt/.config
+        cat $INPUT_CONFIG | grep -v ^\# | grep  . > openwrt/.config
     else
         echo "No Config file found"
         exit 24
@@ -149,20 +171,7 @@ final2(){
     echo "Build To Device: $(cat /tmp/DEVICE_NAME)" >> release.txt
     echo "Build Branch:  $INPUT_BRANCH" >> release.txt
     echo "Github Branch: $GITHUB_REF" >> release.txt
-    if cat /home/copiler/openwrt/.config|grep -q "CONFIG_PACKAGE_luci";then
-        LUCI="true"
-    else 
-        LUCI="false"
-    fi 
-    if cat /home/copiler/openwrt/.config|grep -q "openvpn";then
-        VPN="OpenVPN"
-    else
-        if cat /home/copiler/openwrt/.config|grep -q "wireguard";then
-            VPN="Wireguard"
-        else
-            VPN="There is no or was not detected"
-        fi
-    fi
+    ConfigINFO
     echo "Includes LUCI: $LUCI" >> release.txt
     echo "Includes VPN: $VPN" >> release.txt
     echo "BODY_PATH=$PWD/release.txt" >> $GITHUB_ENV

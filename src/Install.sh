@@ -1,4 +1,5 @@
 #!/bin/bash
+set -x
 #
 # Remove Swap
 echo "Removing Swaps"
@@ -19,8 +20,9 @@ echo "Sucess"
 #
 # 
 # APT
+export debian_frontend=noninteractive
 echo "Updating APT Repositories"
-sudo apt-get update &>> /home/copiler/Apt-Log.txt
+sudo apt update &>> /home/copiler/Apt-Log.txt
 echo "Removing some packages"
 sudo apt purge -y *golang* *android* *google* *mysql* *java* *openjdk* &>> /home/copiler/Apt-Log.txt
 echo "Installing Essential Packages, This can take time! (Between 2 to 5 Min)"

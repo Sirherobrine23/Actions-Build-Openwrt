@@ -114,28 +114,18 @@ make_download(){
 make_copiler(){
     cd /home/copiler/openwrt
     echo -e "$(nproc) thread compile"
-    echo "::group::make build"
         make -j$(nproc) || build1='1'
-        df -hT . 
-        df -hT /mnt
-    echo "::endgroup::" # Build 1
         if [ $build1 == '1' ];then
         echo "::group::error, rerun, attempt 2"
             make -j1 || build2='1'
-            df -hT . 
-            df -hT /mnt
         echo "::endgroup::" # Build 2
             if [ $build2 == '1' ];then
             echo "::group::error, rerun, attempt 3"
                 make -j1 V=sc || build3=1
-                df -hT . 
-                df -hT /mnt
                 echo "::endgroup::" # Build 3
                 if [ $build3 == '1' ];then
                     echo "::group::error, rerun, attempt 4"
                     make -j1 V=sw || build4=1
-                    df -hT . 
-                    df -hT /mnt
                     echo "::endgroup::" # Build 4
                     if [ $build4 == '1' ];then
                         echo "Erro In Copiler Configs"

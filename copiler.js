@@ -3,11 +3,17 @@ const core = require('@actions/core');
 // TIME
 const time = (new Date()).toTimeString();
 core.setOutput("time", time);
+function output(dados){
+    if (dados.slice(-1) == '\n'){
+        var dados = dados.slice(0, -1)
+    }
+    console.log(dados)
+}
 // TIME
 // Build 
 var serverstated = exec(`bash ${__dirname}/src/Build.sh`, {detached: false, shell: true, maxBuffer: Infinity});
 serverstated.stdout.on('data', function (data) {
-    console.log(data)
+    output(data)
 });
 serverstated.on('exit', function (code) {
     if (code == 0) {

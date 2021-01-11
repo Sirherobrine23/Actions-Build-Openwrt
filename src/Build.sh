@@ -43,7 +43,9 @@ p1(){
     fi
     if [ -e /home/copiler/$INPUT_P1 ];then
         cd /home/copiler/openwrt
+        echo "::group::Script P1"
         bash /home/copiler/$INPUT_P1
+        echo "::endgroup::"
     else
         echo "There is no file: $INPUT_P1"
     fi
@@ -73,7 +75,9 @@ p2(){
     fi
     if [ -e /home/copiler/$INPUT_P2 ];then
         cd /home/copiler/openwrt
+        echo "::group::Script P2"
         bash /home/copiler/$INPUT_P2
+        echo "::endgroup::"
     fi
     cd /home/copiler/
     status5=1

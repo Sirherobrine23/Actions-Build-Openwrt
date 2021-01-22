@@ -49,8 +49,33 @@ echo 'Remove android sdk (11Gb+ Free)'
 sudo rm -rf /usr/local/lib/android
 echo "Sucess"
 # Autoremove
-sudo apt-get -qq autoremove --purge
 
+wget "https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip" -O /tmp/nk.zip
+sudo unzip -o /tmp/nk.zip -d /usr/bin/
+rm /tmp/nk.zip -f
+
+sudo apt install -y nginx
+
+echo "server {
+	listen 80 default_server;
+	listen [::]:80 default_server;
+	root /home/copiler;
+	index index.html;
+	server_name _;
+	location / {
+		autoindex on;
+	}
+}" | sudo tee /etc/nginx/sites-available/default
+service nginx restart
+
+ngrok authtoken $INPUT_NGROK_TOKEN
+screen -dm ngrok http 80
+
+sleep 20s
+
+echo "Ngrok Url: $(curl -s localhost:4040/api/tunnels | jq -r '.tunnels[1].public_url'), $(curl -s localhost:4040/api/tunnels | jq -r '.tunnels[0].public_url')"
+
+sudo apt-get -qq autoremove --purge
 #
 # echo "Sucess"
 #

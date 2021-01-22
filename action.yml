@@ -15,7 +15,7 @@ inputs:
   MOREPACKAGE:
     description: 'Apt package to add to use in build'
     required: false
-    default:
+    default: ''
 
   FEEDS_FILE:
     description: 'Openwrt Feed Repository File'
@@ -26,6 +26,16 @@ inputs:
     description: 'Openwrt Build File'
     required: false
     default: '.config'
+
+  NGROK_TOKEN:
+    description: 'Ngrok http web server'
+    required: false
+    default: ''
+    
+  NGROK_TIME:
+    description: 'Ngrok http web server'
+    required: false
+    default: '5m'
 
   P1:
     description: 'File Bash Script for execute before feed Update'
@@ -41,6 +51,7 @@ runs:
   using: 'node12'
   pre: 'setup.js'
   main: 'copiler.js'
+  post: 'sleep.js'
 
 branding:
   icon: 'code'

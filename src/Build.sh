@@ -144,7 +144,8 @@ final2(){
     echo "Build Branch:  $INPUT_BRANCH" >> release.txt
     echo "Github Branch: $GITHUB_REF" >> release.txt
     # --------------------------------------------------------------------------------------------
-    if cat /home/copiler/openwrt/.config|grep -q "CONFIG_PACKAGE_luci";then
+    luci_detect=`cat /home/copiler/openwrt/.config|grep -v ^\#|grep -q "CONFIG_PACKAGE_luci=y";echo $?`
+    if [ ${luci_detect} == '0' ];then
         LUCI="true"
         echo "With LUCI"
     else 

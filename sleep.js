@@ -1,12 +1,12 @@
 var exec = require('child_process').exec;
 const core = require('@actions/core');
 // TIME
-const time = (new Date()).toTimeString();
-core.setOutput("time", time);
+const timei = (new Date()).toTimeString();
+core.setOutput("time", timei);
 function output(dados){if (dados.slice(-1) == '\n'){var dados = dados.slice(0, -1)};console.log(dados)}
 // TIME
 // Build 
-const time = core.getInput("NGROK_TIME")
+var time = core.getInput("NGROK_TIME")
 
 const hour = time.includes('h', 'H')
 const minu = time.includes('m', 'M')
@@ -15,11 +15,11 @@ const seco = time.includes('s', 'S')
 time = time.replace('h', '').replace('H', '').replace('m', '').replace('M', '').replace('s', '').replace('S', '')
 
 if (hour){
-    const sleepout = time * 60 * 60
+    var sleepout = time * 60 * 60
 } else if (minu){
-    const sleepout = time * 60
+    var sleepout = time * 60
 } else if (seco){
-    const sleepout = time
+    var sleepout = time
 } else {
     process.exit(1)
 }

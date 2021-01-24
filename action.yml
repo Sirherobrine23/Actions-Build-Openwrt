@@ -35,7 +35,7 @@ inputs:
   NGROK_TIME:
     description: 'Ngrok http web server'
     required: false
-    default: '5m'
+    default: '5s'
 
   P1:
     description: 'File Bash Script for execute before feed Update'

@@ -123,9 +123,10 @@ make_copiler(){
 final(){
     cd /home/copiler/openwrt/bin/targets/*/* || exit 255
     rm -rf packages
-    cp -rfv /home/copiler/Apt-Log.txt ./Apt.txt
+    cp -rfv /home/copiler/Apt-Log.txt $PWD/apt_log.txt
     cp -rf * $uploadssh23
     ln -s /home/copiler/openwrt $DIR2/openwrt
+    rm -fvr config.buildinfo feeds.buildinfo *.manifest *-uImage-lzma.bin *-vmlinux-lzma.elf *-vmlinux.bin *-vmlinux.elf *-vmlinux.lzma version.buildinfo
     cd /home/copiler/
     status8=1
 }

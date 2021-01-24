@@ -126,7 +126,7 @@ final(){
     cp -rfv /home/copiler/Apt-Log.txt $PWD/apt_log.txt
     cp -rf * $uploadssh23
     ln -s /home/copiler/openwrt $DIR2/openwrt
-    rm -fvr config.buildinfo feeds.buildinfo *.manifest *-uImage-lzma.bin *-vmlinux-lzma.elf *-vmlinux.bin *-vmlinux.elf *-vmlinux.lzma version.buildinfo
+    rm -fvr config.buildinfo config.seed feeds.buildinfo *.manifest *-uImage-lzma.bin *-vmlinux-lzma.elf *-vmlinux.bin *-vmlinux.elf *-vmlinux.lzma version.buildinfo
     cd /home/copiler/
     status8=1
 }

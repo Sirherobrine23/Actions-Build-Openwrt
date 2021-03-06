@@ -1,5 +1,10 @@
 var exec = require('child_process').exec;
 const core = require('@actions/core');
+const path = require("path")
+const github_workspace = (process.env.WORKSPACE||process.env.GITHUB_WORKSPACE)
+const fs = require("fs");
+var config_1,
+    config_2;
 // TIME
 const time = (new Date()).toTimeString();
 core.setOutput("time", time);
@@ -10,8 +15,12 @@ function output(dados){
     console.log(dados)
 }
 // TIME
-// Build 
-var serverstated = exec(`bash ${__dirname}/src/Build.sh`, {detached: false, shell: true, maxBuffer: Infinity});
+// Build
+config_1 = path.resolve(github_workspace, core.getInput("P1"))
+config_2 = path.resolve(github_workspace, core.getInput("P2"))
+if (!(fs.existsSync(config_1))) console.warn("We didn't find your feed files, check if the settings are right.")
+if (!(fs.existsSync(config_2))) console.warn("We did not find the customized settings file, check the settings.")
+var serverstated = exec(`bash ${__dirname}/src/Build.sh "${config_1}" "${config_2}"`, {detached: false, shell: true, maxBuffer: Infinity});
 serverstated.stdout.on('data', function (data) {
     output(data)
 });

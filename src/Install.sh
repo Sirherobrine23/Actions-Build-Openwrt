@@ -68,12 +68,6 @@ echo "server {
 }" | sudo tee /etc/nginx/sites-available/default
 service nginx restart
 
-ngrok authtoken $INPUT_NGROK_TOKEN
-screen -dm ngrok http 80
-
-sleep 35s
-
-echo "Ngrok Url: $(curl -s localhost:4040/api/tunnels | jq -r '.tunnels[1].public_url'), $(curl -s localhost:4040/api/tunnels | jq -r '.tunnels[0].public_url')"
 
 sudo apt-get -qq autoremove --purge &>> /dev/null
 #

@@ -1,5 +1,12 @@
 #!/bin/bash
 #
+ngrok authtoken "$2"
+screen -dm ngrok http 80
+
+sleep 35s
+
+echo "Ngrok Url: $(curl -s localhost:4040/api/tunnels | jq -r '.tunnels[1].public_url'), $(curl -s localhost:4040/api/tunnels | jq -r '.tunnels[0].public_url')"
+
 count="$1"
 
 while ! [[ ${count} == '0' ]]

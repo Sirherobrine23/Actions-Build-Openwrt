@@ -41,13 +41,11 @@ p1(){
     if [ -e $INPUT_FEEDS_FILE ];then
         mv $INPUT_FEEDS_FILE openwrt/feeds.conf.default
     fi
-    if [ -e /home/copiler/$INPUT_P1 ];then
+    if [ -e "${1}" ];then
         cd /home/copiler/openwrt
-        echo "::group::Script P1"
-        bash /home/copiler/$INPUT_P1
+        echo "::group::Load custom feeds"
+        bash "${1}"
         echo "::endgroup::"
-    else
-        echo "There is no file: $INPUT_P1"
     fi
     cd /home/copiler/
     status2=1
@@ -73,10 +71,10 @@ p2(){
         echo "No Config file found"
         exit 24
     fi
-    if [ -e /home/copiler/$INPUT_P2 ];then
+    if [ -e "${2}" ];then
         cd /home/copiler/openwrt
-        echo "::group::Script P2"
-        bash /home/copiler/$INPUT_P2
+        echo "::group::Custom Config"
+        bash "${2}"
         echo "::endgroup::"
     fi
     cd /home/copiler/

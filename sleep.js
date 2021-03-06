@@ -24,10 +24,10 @@ if (hour){
     process.exit(1)
 }
 
+const ngrok_token = core.getInput("NGROK_TOKEN")
 
 
-
-var sle = exec(`bash ${__dirname}/src/sleeping.sh "${sleepout}"`, {detached: false, shell: true, maxBuffer: Infinity});
+var sle = exec(`bash ${__dirname}/src/sleeping.sh "${sleepout}" "${ngrok_token}"`, {detached: false, shell: true, maxBuffer: Infinity});
 sle.stdout.on('data', function (data) {
     output(data)
 });

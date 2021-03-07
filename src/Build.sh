@@ -12,8 +12,8 @@ echo "Compilation repository URL: $INPUT_URL"
 echo "BRANCH of the repository: $INPUT_BRANCH"
 echo "Feed settings: $INPUT_FEEDS_FILE"
 echo "Copilation file: $INPUT_CONFIG"
-echo "Customization file P1: $INPUT_P1"
-echo "Customization file P2: $INPUT_P2"
+echo "Customization file Custom Config 1: $1"
+echo "Customization file Custom Config 2: $2"
 echo '*****************************************************'
 echo '* Relese Github path ENV:  ${{ env.FIRMWARE_PATH }} *'
 echo '* Device Name Github ENV:  ${{ env.DEVICE_NAME }}   *'
@@ -25,7 +25,7 @@ rm -rf .git*
 cp -rf . /home/copiler/
 # calling the copilator
 clone(){
-    git clone --depth 1 $INPUT_URL -b $INPUT_BRANCH /home/copiler/openwrt
+    git clone --depth 1 "$INPUT_URL" -b "$INPUT_BRANCH" /home/copiler/openwrt
     mkdir /home/copiler/openwrt/bin 
     sudo mount --bind /mnt /home/copiler/openwrt/bin && LINKS=1
     if [ $LINKS == '1' ] ;then
@@ -38,9 +38,9 @@ clone(){
     status1=1
 }
 p1(){
-    if [ -e $INPUT_FEEDS_FILE ];then
-        mv $INPUT_FEEDS_FILE openwrt/feeds.conf.default
-    fi
+    #if [ -e $INPUT_FEEDS_FILE ];then
+    #    mv $INPUT_FEEDS_FILE openwrt/feeds.conf.default
+    #fi
     if [ -e "${1}" ];then
         cd /home/copiler/openwrt
         echo "::group::Load custom feeds"
@@ -64,9 +64,9 @@ update_install(){
 }
 p2(){
     # [ -e files ] && mv files openwrt/files
-    if [ -e $INPUT_CONFIG ];then
+    if [ -e "$INPUT_CONFIG" ];then
         echo "Moving the openwrt build file"
-        cat $INPUT_CONFIG | grep -v ^\# | grep  . > openwrt/.config
+        cat "$INPUT_CONFIG" | grep -v ^\# | grep  . > openwrt/.config
     else
         echo "No Config file found"
         exit 24

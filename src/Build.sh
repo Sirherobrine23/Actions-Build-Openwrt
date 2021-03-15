@@ -23,6 +23,7 @@ echo '*****************************************************'
 mkdir publics/
 rm -rf .git*
 cp -rf . /home/copiler/
+Home_path="$PWD"
 # calling the copilator
 clone(){
     git clone --depth 1 "$INPUT_URL" -b "$INPUT_BRANCH" /home/copiler/openwrt
@@ -44,7 +45,9 @@ p1(){
     if [ -e "${1}" ];then
         cd /home/copiler/openwrt
         echo "::group::Load custom feeds"
-        bash "${1}"
+        echo -e "Openwrt_path=\"/home/copiler/openwrt\""
+        echo -e "Home_path=\"${Home_path}\""
+        Openwrt_path="/home/copiler/openwrt" Home_path="${Home_path}" bash "${1}"
         echo "::endgroup::"
     fi
     cd /home/copiler/
@@ -74,7 +77,9 @@ p2(){
     if [ -e "${2}" ];then
         cd /home/copiler/openwrt
         echo "::group::Custom Config"
-        bash "${2}"
+        echo -e "Openwrt_path=\"/home/copiler/openwrt\""
+        echo -e "Home_path=\"${Home_path}\""
+        Openwrt_path="/home/copiler/openwrt" Home_path="${Home_path}" bash "${2}"
         echo "::endgroup::"
     fi
     cd /home/copiler/
